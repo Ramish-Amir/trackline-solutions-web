@@ -1,8 +1,9 @@
+import { Container } from '@mui/material'
 import React from 'react'
 
-function Page() {
+function Page(props) {
   return (
-    <div>Page</div>
+    <Container sx={{ width: "100%", m: "20px"}}>{props.children}</Container>
   )
 }
 
