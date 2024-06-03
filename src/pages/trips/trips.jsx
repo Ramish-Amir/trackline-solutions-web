@@ -1,8 +1,11 @@
 import React from 'react'
+import Page from '../../layouts/Page/Page'
 
 function Trips() {
   return (
-    <div>Trips</div>
+    <Page>
+     <h1>Trips</h1>
+   </Page>
   )
 }
 

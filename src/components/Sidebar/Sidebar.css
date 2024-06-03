@@ -1,0 +1,21 @@
+.sidebarItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 2px;
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    margin: 5px auto;
+    text-decoration: none;
+    color: #DDDDDD;
+}
+
+.item-icon {
+    margin-right: 10px;
+}
+
+.active {
+    background-color: #014e4e;
+}

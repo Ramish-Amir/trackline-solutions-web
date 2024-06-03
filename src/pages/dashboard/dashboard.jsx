@@ -4,7 +4,7 @@ import Page from '../../layouts/Page/Page'
 function Dashboard() {
   return (
    <Page>
-     <div>dashboard</div>
+     <h1>Dashboard</h1>
    </Page>
   )
 }

@@ -1,8 +1,11 @@
 import React from 'react'
+import Page from '../../layouts/Page/Page'
 
 function Vehicles() {
   return (
-    <div>Vehicles</div>
+    <Page>
+     <h1>Vehicles</h1>
+   </Page>
   )
 }
 
