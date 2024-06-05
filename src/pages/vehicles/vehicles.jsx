@@ -19,24 +19,24 @@ const Vehicle = () => {
   return (
     <Page>
       <h1>Registed Vehicles</h1>
-    <TableContainer>
-      <Table className="vehicle-table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell>Vehicle Number</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {vehicles.map((vehicle) => (
-            <TableRow key={vehicle.id}>
-              <TableCell>{vehicle.username}</TableCell>
-              <TableCell>{vehicle.vehicleNumber}</TableCell>
+        <TableContainer>
+        <Table className="vehicle-table">
+            <TableHead>
+            <TableRow>
+                <TableCell>Username</TableCell>
+                <TableCell>Vehicle Number</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            </TableHead>
+            <TableBody>
+            {vehicles.map((vehicle) => (
+                <TableRow key={vehicle.id}>
+                <TableCell>{vehicle.username}</TableCell>
+                <TableCell>{vehicle.vehicleNumber}</TableCell>
+                </TableRow>
+            ))}
+            </TableBody>
+        </Table>
+        </TableContainer>
     </Page>
   );
 };
