@@ -11,11 +11,11 @@ function App() {
     <Router>
       {/* check if the user is logged in or not */}
       {user ? (
-        <Grid container spacing={2} sx={{ bgcolor: colors.background }}>
+        <Grid container sx={{ bgcolor: colors.background }}>
           <Grid item xs={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item xs={9.5} sx={{ p: "20px" }}>
+          <Grid item xs={9.5} sx={{ p: "15px" }}>
             <Routes>
               {routes?.map((route, index) => (
                 <Route

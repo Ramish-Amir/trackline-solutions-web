@@ -36,7 +36,7 @@ function Sidebar() {
   return (
     <Box
     sx={{ bgcolor: colors.primary, 
-        m: "15px", 
+        m: "15px 0 15px 30px", 
         px: "10px", 
         py: "15px",
         borderRadius: "25px",
