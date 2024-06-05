@@ -1,3 +1,7 @@
+.sidebarContainer {
+    position: relative;
+}
+
 .sidebarItem {
     display: flex;
     flex-direction: row;
@@ -18,4 +22,9 @@
 
 .active {
     background-color: #014e4e;
+}
+
+.logoutBtn {
+    position: absolute;
+    bottom: 20px;
 }

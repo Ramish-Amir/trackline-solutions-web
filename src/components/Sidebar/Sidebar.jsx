@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { colors } from '../../assets'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
@@ -7,9 +7,12 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import GroupIcon from '@mui/icons-material/Group';
 import './Sidebar.css'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { AuthContext } from '../../context/AuthContext';
 
 function Sidebar() {
     const navigate = useNavigate()
+    const { logout } = useContext(AuthContext)
 
     const sidebarItems = [
         {
@@ -33,8 +36,19 @@ function Sidebar() {
             icon: <GroupIcon />
         }
     ]
+
+    const handleLogout = async () => {
+        const logoutRes = await logout();
+        console.log("LOGOUT RES >> ", logoutRes);
+
+        if (logoutRes) {
+            navigate('/auth/login')
+        }
+    }
+    
   return (
     <Box
+    className='sidebarContainer'
     sx={{ bgcolor: colors.primary, 
         m: "15px 0 15px 30px", 
         px: "10px", 
@@ -71,6 +85,11 @@ function Sidebar() {
                     </NavLink>
             ))
         }
+
+        <div className='logoutBtn sidebarItem' onClick={handleLogout}>
+            <div className='item-icon'><LogoutIcon /></div>
+            <span>Logout</span>
+        </div>
 
     </Box>
   )
