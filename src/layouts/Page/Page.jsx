@@ -3,7 +3,7 @@ import React from 'react'
 
 function Page(props) {
   return (
-    <Container sx={{ width: "100%", m: "20px"}}>{props.children}</Container>
+    <Container sx={{ width: "100%"}}>{props.children}</Container>
   )
 }
 

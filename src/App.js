@@ -2,20 +2,32 @@ import { Grid } from "@mui/material";
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { authRoutes, routes } from "./routes";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { colors } from "./assets";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const user = true;
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      navigate("/auth/login");
+    } else {
+      navigate("/");
+    }
+  }, [auth.currentUser]);
+
   return (
-    <Router>
+    <>
       {/* check if the user is logged in or not */}
-      {user ? (
+      {auth.currentUser ? (
         <Grid container spacing={2} sx={{ bgcolor: colors.background }}>
           <Grid item xs={2.5}>
             <Sidebar />
           </Grid>
-          <Grid item xs={9.5} sx={{ p: "20px" }}>
+          <Grid item xs={9.5} sx={{ p: "15px" }}>
             <Routes>
               {routes?.map((route, index) => (
                 <Route
@@ -38,19 +50,7 @@ function App() {
           ))}
         </Routes>
       )}
-    </Router>
-    // <div className={"main-container"}>
-    // <Grid container spacing={2}>
-    //   <Grid item xs={2}>
-    //     <Sidebar />
-    //   </Grid>
-    //   <Grid item xs={10}>
-    //     <Sidebar />
-    //   </Grid>
-    // </Grid>
-    //   {/* <div className="sidebar-container"></div> */}
-    //   {/* <div className="page-container"></div> */}
-    // </div>
+    </>
   );
 }
 
