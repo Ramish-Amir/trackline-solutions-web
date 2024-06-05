@@ -1,0 +1,45 @@
+/* vehicle.css */
+
+h1{
+ position: relative;   
+ text-align: center;
+}
+.vehicle-table {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .vehicle-table th,
+  .vehicle-table td {
+    padding: 15px 20px;
+    text-align: left;
+  }
+  
+  .vehicle-table th {
+    background-color: #004040;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  
+  .vehicle-table td {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .vehicle-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .vehicle-table tr:nth-child(even) {
+    background-color: #f8f8f8;
+  }
+  
+  .vehicle-table tr:hover {
+    background-color: #f0f0f0;
+  }
