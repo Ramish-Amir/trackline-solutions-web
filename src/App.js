@@ -14,9 +14,11 @@ function App() {
   useEffect(() => {
     if (!auth.currentUser) {
       navigate("/auth/login");
+    } else {
+      navigate("/");
     }
-  }, []);
-  const user = true;
+  }, [auth.currentUser]);
+
   return (
     <>
       {/* check if the user is logged in or not */}
