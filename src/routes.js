@@ -4,33 +4,43 @@ import Vehicles from "./pages/vehicles/vehicles";
 import Trips from "./pages/trips/trips";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
+import RegisterUser from "./components/RegisterUser/RegisterUser";
 
 export const routes = [
   {
     path: "/",
-    component: <Dashboard />,
+    element: <Dashboard />,
   },
   {
     path: "/users",
-    component: <Users />,
+    children: [
+      {
+        path: "",
+        element: <Users />,
+      },
+      {
+        path: "register",
+        element: <RegisterUser />,
+      },
+    ],
   },
   {
     path: "/vehicles",
-    component: <Vehicles />,
+    element: <Vehicles />,
   },
   {
     path: "/trips",
-    component: <Trips />,
+    element: <Trips />,
   },
 ];
 
 export const authRoutes = [
   {
     path: "/auth/login",
-    component: <Login />,
+    element: <Login />,
   },
   {
     path: "/auth/signup",
-    component: <Signup />,
+    element: <Signup />,
   },
 ];

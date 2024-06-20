@@ -1,0 +1,13 @@
+.pageHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerActions {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: max-content;
+}

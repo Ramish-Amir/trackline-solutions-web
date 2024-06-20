@@ -6,7 +6,7 @@ import ModeOfTravelIcon from '@mui/icons-material/ModeOfTravel';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import GroupIcon from '@mui/icons-material/Group';
 import './Sidebar.css'
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -38,12 +38,8 @@ function Sidebar() {
     ]
 
     const handleLogout = async () => {
-        const logoutRes = await logout();
-        console.log("LOGOUT RES >> ", logoutRes);
-
-        if (logoutRes) {
-            navigate('/auth/login')
-        }
+        await logout();
+        navigate('/auth/login')
     }
     
   return (
