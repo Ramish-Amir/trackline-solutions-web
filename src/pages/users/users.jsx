@@ -1,25 +1,4 @@
-/*import React from 'react'
-import Page from '../../layouts/Page/Page'
-// mui styling library
-// username->driver
-// trips details-> no of trips
-// no vehicle used.
-// email
-// phone
-// button
-//function
-function Users() 
- {
-  return (
-    <Page>
-     <h1>Users</h1>
-   </Page>
-   )
- }
-
-export default Users
-*/
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -33,22 +12,20 @@ import { Button } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import "./users.css";
 import { colors } from "../../assets";
-
-function createData(userName, vehicleName, vehicleNo, noOfTrips, ratings) {
-  return { userName, vehicleName, vehicleNo, noOfTrips, ratings };
-}
-
-const rows = [
-  createData("Ramish", "camry", "pak001", 5, 3),
-  createData("Ramish", "camry", "pak001", 5, 3),
-  createData("Ramish", "camry", "pak001", 5, 3),
-  createData("Ramish", "camry", "pak001", 5, 3),
-  createData("Ramish", "camry", "pak001", 5, 3),
-  createData("Ramish", "camry", "pak001", 5, 3),
-];
+import { getAllUsers } from "../../api/users";
 
 export default function Users() {
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await getAllUsers();
+      setUsers(res);
+    };
+    fetchUsers();
+  }, []);
+  
   return (
     <Page>
       <div className="pageHeader">
@@ -76,26 +53,26 @@ export default function Users() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Driver Name</TableCell>
-              <TableCell align="right">Vehicle Name</TableCell>
-              <TableCell align="right">Vehicle Number</TableCell>
-              <TableCell align="right">No of Trips</TableCell>
-              <TableCell align="right">Rating</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>No of Trips</TableCell>
+              <TableCell>No of Vehicles</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {users.map((row, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.userName}
+                  {row.firstName}
                 </TableCell>
-                <TableCell align="right">{row.vehicleName}</TableCell>
-                <TableCell align="right">{row.vehicleNo}</TableCell>
-                <TableCell align="right">{row.noOfTrips}</TableCell>
-                <TableCell align="right">{row.ratings}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.totalTrips}</TableCell>
+                <TableCell>{row.totalVehicles}</TableCell>
               </TableRow>
             ))}
           </TableBody>
