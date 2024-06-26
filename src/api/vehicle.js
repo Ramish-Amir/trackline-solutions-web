@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   increment,
@@ -52,7 +53,7 @@ export const getAllVehicles = async () => {
     vehiclesSnapshot.forEach((vehicleDoc) => {
       allVehicles.push({
         id: vehicleDoc.id,
-        owner: userId,
+        ownerId: userId,
         ownerName: `${firstName} ${lastName}`,
         ...vehicleDoc.data(),
       });
@@ -60,4 +61,14 @@ export const getAllVehicles = async () => {
   }
 
   return allVehicles;
+};
+
+export const deleteVehicle = async (ownerId, vehicleId) => {
+  await deleteDoc(
+    doc(db, DB_COLLECTIONS.USERS, ownerId, DB_COLLECTIONS.VEHICLES, vehicleId)
+  );
+
+  await updateDoc(doc(db, DB_COLLECTIONS.USERS, ownerId), {
+    totalVehicles: increment(-1),
+  });
 };

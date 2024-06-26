@@ -9,10 +9,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./vehicles.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Paper } from "@mui/material";
+import { Button } from "@mui/material";
 import { colors } from "../../assets";
 import { useNavigate } from "react-router-dom";
-import { getAllVehicles } from "../../api/vehicle";
+import { deleteVehicle, getAllVehicles } from "../../api/vehicle";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const Vehicle = () => {
   const navigate = useNavigate();
@@ -20,12 +21,22 @@ const Vehicle = () => {
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
-    const fetchVehicles = async () => {
-      const res = await getAllVehicles();
-      setVehicles(res);
-    };
     fetchVehicles();
   }, []);
+
+  const fetchVehicles = async () => {
+    const res = await getAllVehicles();
+    setVehicles(res);
+  };
+
+  const handleDeleteVehicle = async (ownerId, vehicleId) => {
+    try {
+      await deleteVehicle(ownerId, vehicleId);
+      await fetchVehicles();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Page>
@@ -63,6 +74,7 @@ const Vehicle = () => {
               <TableCell>Year of Manufacture</TableCell>
               <TableCell>Owner</TableCell>
               <TableCell>Total Trips</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,6 +87,14 @@ const Vehicle = () => {
                 <TableCell>{vehicle.yearOfManufacture}</TableCell>
                 <TableCell>{vehicle.ownerName}</TableCell>
                 <TableCell>{vehicle.vehicleTotalTrips}</TableCell>
+                <TableCell>
+                  <DeleteOutlineIcon
+                    sx={{ color: "red", cursor: "pointer" }}
+                    onClick={() =>
+                      handleDeleteVehicle(vehicle?.ownerId, vehicle?.id)
+                    }
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
