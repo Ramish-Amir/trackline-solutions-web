@@ -89,7 +89,6 @@ function RegisterUser() {
     if (validate()) {
       setLoading(true);
       const user = await registerUser(userData);
-      console.log("USER >> ", user);
       setLoading(false);
       if (user?.uid) {
         navigate("/users");

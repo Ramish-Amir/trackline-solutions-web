@@ -16,13 +16,14 @@ import { useNavigate } from "react-router-dom";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import "./RegisterVehicle.css";
 import { registerVehicle } from "../../api/vehicle";
+import { getAllUsers } from "../../api/users";
 
 function RegisterVehicle() {
   const [vehicleData, setVehicleData] = useState({
     company: "",
     make: "",
     yearOfManufacture: "",
-    registrationNumber: "",
+    vehicleRegistraionNo: "",
     fuelType: "",
     owner: "",
   });
@@ -33,13 +34,13 @@ function RegisterVehicle() {
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     const fetchUsers = async () => {
-  //       const usersList = await getUsers();
-  //       setUsers(usersList);
-  //     };
-  //     fetchUsers();
-  //   }, []);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const usersList = await getAllUsers();
+      setUsers(usersList);
+    };
+    fetchUsers();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,8 +82,8 @@ function RegisterVehicle() {
       isValid = false;
     }
 
-    if (!vehicleData.registrationNumber) {
-      tempErrors.registrationNumber = "Registration Number is required";
+    if (!vehicleData.vehicleRegistraionNo) {
+      tempErrors.vehicleRegistraionNo = "Registration Number is required";
       isValid = false;
     }
 
@@ -104,10 +105,13 @@ function RegisterVehicle() {
     e.preventDefault();
     if (validate()) {
       setLoading(true);
-      const vehicle = await registerVehicle(vehicleData);
-      setLoading(false);
-      if (vehicle?.id) {
+      try {
+        await registerVehicle(vehicleData);
         navigate("/vehicles");
+      } catch (error) {
+        console.log("Error adding vehicle: ", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -200,12 +204,12 @@ function RegisterVehicle() {
             <Grid item xs={6}>
               <TextField
                 label="Registration Number"
-                name="registrationNumber"
-                value={vehicleData.registrationNumber}
+                name="vehicleRegistraionNo"
+                value={vehicleData.vehicleRegistraionNo}
                 onChange={handleChange}
                 fullWidth
-                error={!!errors.registrationNumber}
-                helperText={errors.registrationNumber}
+                error={!!errors.vehicleRegistraionNo}
+                helperText={errors.vehicleRegistraionNo}
                 InputProps={{
                   style: {
                     borderRadius: "12px",
@@ -253,7 +257,7 @@ function RegisterVehicle() {
                 >
                   {users.map((user) => (
                     <MenuItem key={user.id} value={user.id}>
-                      {user.name}
+                      {`${user.firstName} ${user.lastName}`}
                     </MenuItem>
                   ))}
                 </Select>

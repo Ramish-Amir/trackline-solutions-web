@@ -7,7 +7,6 @@ import Home from "./layouts/Home/Home";
 
 function App() {
   const auth = useContext(AuthContext);
-  console.log("AUTH USER >> ", auth?.currentUser);
 
   return (
     <>

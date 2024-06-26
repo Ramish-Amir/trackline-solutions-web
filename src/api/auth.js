@@ -4,6 +4,8 @@ import { doc, setDoc } from "firebase/firestore";
 
 export const DB_COLLECTIONS = {
   USERS: "users",
+  VEHICLES: "vehicles",
+  TRIPS: "trips",
 };
 
 export const registerUser = async (data) => {
