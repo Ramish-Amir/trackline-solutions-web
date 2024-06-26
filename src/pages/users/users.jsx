@@ -39,7 +39,7 @@ export default function Users() {
   return (
     <Page>
       <div className="pageHeader">
-        <h1>Users (Drivers)</h1>
+        <h1>Users</h1>
         <div className="headerActions">
           <Button
             sx={{
