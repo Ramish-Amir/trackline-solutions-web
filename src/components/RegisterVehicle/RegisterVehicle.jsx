@@ -23,7 +23,7 @@ function RegisterVehicle() {
     company: "",
     make: "",
     yearOfManufacture: "",
-    vehicleRegistraionNo: "",
+    vehicleRegistrationNo: "",
     fuelType: "",
     owner: "",
   });
@@ -82,8 +82,8 @@ function RegisterVehicle() {
       isValid = false;
     }
 
-    if (!vehicleData.vehicleRegistraionNo) {
-      tempErrors.vehicleRegistraionNo = "Registration Number is required";
+    if (!vehicleData.vehicleRegistrationNo) {
+      tempErrors.vehicleRegistrationNo = "Registration Number is required";
       isValid = false;
     }
 
@@ -204,12 +204,12 @@ function RegisterVehicle() {
             <Grid item xs={6}>
               <TextField
                 label="Registration Number"
-                name="vehicleRegistraionNo"
-                value={vehicleData.vehicleRegistraionNo}
+                name="vehicleRegistrationNo"
+                value={vehicleData.vehicleRegistrationNo}
                 onChange={handleChange}
                 fullWidth
-                error={!!errors.vehicleRegistraionNo}
-                helperText={errors.vehicleRegistraionNo}
+                error={!!errors.vehicleRegistrationNo}
+                helperText={errors.vehicleRegistrationNo}
                 InputProps={{
                   style: {
                     borderRadius: "12px",

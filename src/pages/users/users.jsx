@@ -25,7 +25,7 @@ export default function Users() {
     };
     fetchUsers();
   }, []);
-  
+
   return (
     <Page>
       <div className="pageHeader">
@@ -49,8 +49,11 @@ export default function Users() {
         </div>
       </div>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableContainer>
+        <Table
+          className="vehicle-table"
+          sx={{ backgroundColor: "white", minWidth: 650 }}
+        >
           <TableHead>
             <TableRow>
               <TableCell>First Name</TableCell>
@@ -66,9 +69,7 @@ export default function Users() {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.firstName}
-                </TableCell>
+                <TableCell>{row.firstName}</TableCell>
                 <TableCell>{row.lastName}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.totalTrips}</TableCell>

@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDocs,
   increment,
   updateDoc,
 } from "firebase/firestore";
@@ -25,4 +26,38 @@ export const registerVehicle = async (data) => {
 
   const userDocRef = doc(db, DB_COLLECTIONS.USERS, data?.owner);
   await updateDoc(userDocRef, { totalVehicles: increment(1) });
+};
+
+export const getAllVehicles = async () => {
+  const allVehicles = [];
+
+  // Step 1: Get all users
+  const usersCollectionRef = collection(db, DB_COLLECTIONS.USERS);
+  const usersSnapshot = await getDocs(usersCollectionRef);
+
+  // Step 2: For each user, get all vehicles
+  for (const userDoc of usersSnapshot.docs) {
+    const userId = userDoc.id;
+    const { firstName, lastName } = userDoc?.data();
+    const vehiclesCollectionRef = collection(
+      db,
+      DB_COLLECTIONS.USERS,
+      userId,
+      DB_COLLECTIONS.VEHICLES
+    );
+
+    const vehiclesSnapshot = await getDocs(vehiclesCollectionRef);
+
+    // Add each vehicle to the allVehicles array
+    vehiclesSnapshot.forEach((vehicleDoc) => {
+      allVehicles.push({
+        id: vehicleDoc.id,
+        owner: userId,
+        ownerName: `${firstName} ${lastName}`,
+        ...vehicleDoc.data(),
+      });
+    });
+  }
+
+  return allVehicles;
 };

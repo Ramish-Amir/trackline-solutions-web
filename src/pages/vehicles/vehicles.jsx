@@ -1,6 +1,6 @@
 import Page from "../../layouts/Page/Page";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,17 +9,23 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./vehicles.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { colors } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import { getAllVehicles } from "../../api/vehicle";
 
 const Vehicle = () => {
   const navigate = useNavigate();
 
-  const [vehicles, setVehicles] = useState([
-    { username: "John Doe", vehicleNumber: "ABC123", id: 1 },
-    { username: "Jane Smith", vehicleNumber: "XYZ456", id: 2 },
-  ]);
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      const res = await getAllVehicles();
+      setVehicles(res);
+    };
+    fetchVehicles();
+  }, []);
 
   return (
     <Page>
@@ -44,18 +50,31 @@ const Vehicle = () => {
         </div>
       </div>
       <TableContainer>
-        <Table className="vehicle-table">
+        <Table
+          className="vehicle-table"
+          sx={{ backgroundColor: "white", minWidth: 650 }}
+        >
           <TableHead>
             <TableRow>
-              <TableCell>Username</TableCell>
-              <TableCell>Vehicle Number</TableCell>
+              <TableCell>Make</TableCell>
+              <TableCell>Company</TableCell>
+              <TableCell>Registration Number</TableCell>
+              <TableCell>Fuel Type</TableCell>
+              <TableCell>Year of Manufacture</TableCell>
+              <TableCell>Owner</TableCell>
+              <TableCell>Total Trips</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {vehicles.map((vehicle) => (
               <TableRow key={vehicle.id}>
-                <TableCell>{vehicle.username}</TableCell>
-                <TableCell>{vehicle.vehicleNumber}</TableCell>
+                <TableCell>{vehicle.make}</TableCell>
+                <TableCell>{vehicle.company}</TableCell>
+                <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>
+                <TableCell>{vehicle.fuelType}</TableCell>
+                <TableCell>{vehicle.yearOfManufacture}</TableCell>
+                <TableCell>{vehicle.ownerName}</TableCell>
+                <TableCell>{vehicle.vehicleTotalTrips}</TableCell>
               </TableRow>
             ))}
           </TableBody>
