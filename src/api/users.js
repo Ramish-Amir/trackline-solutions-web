@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { DB_COLLECTIONS } from "./auth";
 import { db } from "../firebase";
 
@@ -10,4 +10,8 @@ export const getAllUsers = async () => {
     console.log(err);
     return err;
   }
+};
+
+export const deleteUserWithId = async (userId) => {
+  await deleteDoc(doc(db, DB_COLLECTIONS.USERS, userId));
 };

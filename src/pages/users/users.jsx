@@ -5,26 +5,36 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Page from "../../layouts/Page/Page";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import "./users.css";
 import { colors } from "../../assets";
-import { getAllUsers } from "../../api/users";
+import { deleteUserWithId, getAllUsers } from "../../api/users";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await getAllUsers();
-      setUsers(res);
-    };
     fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    const res = await getAllUsers();
+    setUsers(res);
+  };
+
+  const handleDeleteUser = async (id) => {
+    try {
+      await deleteUserWithId(id);
+      await fetchUsers();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Page>
@@ -61,19 +71,26 @@ export default function Users() {
               <TableCell>Email</TableCell>
               <TableCell>No of Trips</TableCell>
               <TableCell>No of Vehicles</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((row, index) => (
+            {users?.map((user, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{row.firstName}</TableCell>
-                <TableCell>{row.lastName}</TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.totalTrips}</TableCell>
-                <TableCell>{row.totalVehicles}</TableCell>
+                <TableCell>{user.firstName}</TableCell>
+                <TableCell>{user.lastName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.totalTrips}</TableCell>
+                <TableCell>{user.totalVehicles}</TableCell>
+                <TableCell>
+                  <DeleteOutlineIcon
+                    sx={{ color: "red", cursor: "pointer" }}
+                    onClick={() => handleDeleteUser(user?.id)}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
