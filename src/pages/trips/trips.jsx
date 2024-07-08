@@ -39,7 +39,6 @@ const Trips = () => {
   //     console.error(error);
   //   }
   // };
-
   return (
     <Page>
       <div className="pageHeader">
@@ -69,26 +68,28 @@ const Trips = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>Make</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Registration Number</TableCell>
-              <TableCell>Fuel Type</TableCell>
-              <TableCell>Year of Manufacture</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell>Total Trips</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Duration</TableCell>
+              <TableCell>Starting Address</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>Ending Address</TableCell>
+              <TableCell>End Time</TableCell>
+              <TableCell>Owner Name</TableCell>
+              <TableCell>Vehicle Name</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {trips.map((trip) => (
               <TableRow key={trip.id}>
-                <TableCell>{trip.make}</TableCell>
-                <TableCell>{trip.company}</TableCell>
-                <TableCell>{trip.vehicleRegistrationNo}</TableCell>
-                <TableCell>{trip.fuelType}</TableCell>
-                <TableCell>{trip.yearOfManufacture}</TableCell>
+                <TableCell>{(trip.id)}</TableCell>
+                <TableCell>{trip.duration}</TableCell>
+                <TableCell>{trip.startingAddress}</TableCell>
+                <TableCell>{new Date(trip.startingTime *1000).toLocaleString()}</TableCell>
+                <TableCell>{trip.endingAddress}</TableCell>
+                <TableCell>{new Date(trip.endingTime*1000).toLocaleString()}</TableCell>
                 <TableCell>{trip.ownerName}</TableCell>
-                <TableCell>{trip.vehicleTotalTrips}</TableCell>
+                <TableCell>{trip.company}</TableCell>
                 <TableCell>
                   <DeleteOutlineIcon
                     sx={{ color: "red", cursor: "pointer" }}

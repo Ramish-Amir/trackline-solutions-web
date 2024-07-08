@@ -25,7 +25,7 @@ export const getAllTrips = async () => {
     // Add each vehicle to the allVehicles array
     for (const vehicleDoc of vehiclesSnapshot.docs) {
       const vehicleId = vehicleDoc.id;
-
+      const { company } = vehicleDoc?.data();
       const tripsCollectionRef = collection(
         db,
         DB_COLLECTIONS.USERS,
@@ -43,6 +43,7 @@ export const getAllTrips = async () => {
           ownerId: userId,
           ownerName: `${firstName} ${lastName}`,
           vehicleId,
+          company,
           ...tripDoc?.data(), // Corrected spread operator to use tripDoc instead of vehicleDoc
         });
       });
