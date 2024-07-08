@@ -13,7 +13,6 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { colors } from "../../assets";
 import { useNavigate } from "react-router-dom";
-import { deleteVehicle, getAllVehicles } from "../../api/vehicle";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const Trips = () => {
