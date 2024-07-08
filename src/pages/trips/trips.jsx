@@ -1,4 +1,5 @@
 import Page from "../../layouts/Page/Page";
+import { getAllTrips } from "../../api/trips";
 
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
@@ -18,15 +19,16 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 const Trips = () => {
   const navigate = useNavigate();
 
-  const [vehicles, setVehicles] = useState([]);
+  const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    fetchVehicles();
+    fetchTrips();
   }, []);
 
-  const fetchVehicles = async () => {
-    const res = await getAllVehicles();
-    setVehicles(res);
+  const fetchTrips = async () => {
+    const trips = await getAllTrips();
+    console.log("TRIPs >> ", trips);
+    setTrips(trips);
   };
 
   // const handleDeleteVehicle = async (ownerId, vehicleId) => {
@@ -78,15 +80,15 @@ const Trips = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {vehicles.map((vehicle) => (
-              <TableRow key={vehicle.id}>
-                <TableCell>{vehicle.make}</TableCell>
-                <TableCell>{vehicle.company}</TableCell>
-                <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>
-                <TableCell>{vehicle.fuelType}</TableCell>
-                <TableCell>{vehicle.yearOfManufacture}</TableCell>
-                <TableCell>{vehicle.ownerName}</TableCell>
-                <TableCell>{vehicle.vehicleTotalTrips}</TableCell>
+            {trips.map((trip) => (
+              <TableRow key={trip.id}>
+                <TableCell>{trip.make}</TableCell>
+                <TableCell>{trip.company}</TableCell>
+                <TableCell>{trip.vehicleRegistrationNo}</TableCell>
+                <TableCell>{trip.fuelType}</TableCell>
+                <TableCell>{trip.yearOfManufacture}</TableCell>
+                <TableCell>{trip.ownerName}</TableCell>
+                <TableCell>{trip.vehicleTotalTrips}</TableCell>
                 <TableCell>
                   <DeleteOutlineIcon
                     sx={{ color: "red", cursor: "pointer" }}
