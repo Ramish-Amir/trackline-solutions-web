@@ -6,6 +6,7 @@ import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
 import RegisterUser from "./components/RegisterUser/RegisterUser";
 import RegisterVehicle from "./components/RegisterVehicle/RegisterVehicle";
+import TripDetails from "./pages/tripDetails/tripDetails";
 
 export const routes = [
   {
@@ -40,7 +41,16 @@ export const routes = [
   },
   {
     path: "/trips",
-    element: <Trips />,
+    children: [
+      {
+        path: "",
+        element: <Trips />,
+      },
+      {
+        path: "/trips/:id",
+        element: <TripDetails />,
+      },
+    ],
   },
 ];
 
