@@ -1,13 +1,20 @@
 import "./App.css";
 import { authRoutes } from "./routes";
-import { Routes, Route } from "react-router-dom";
-import { useContext } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./layouts/Home/Home";
 import { SnackbarProvider } from "notistack";
 
 function App() {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      navigate("auth/login");
+    }
+  }, []);
 
   return (
     <>
