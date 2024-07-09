@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./layouts/Home/Home";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   const auth = useContext(AuthContext);
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       {/* check if the user is logged in or not */}
+      <SnackbarProvider />
       {auth.currentUser ? (
         <Home />
       ) : (

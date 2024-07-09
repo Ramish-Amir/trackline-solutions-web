@@ -17,6 +17,8 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import "./RegisterVehicle.css";
 import { registerVehicle } from "../../api/vehicle";
 import { getAllUsers } from "../../api/users";
+import { enqueueSnackbar } from "notistack";
+import { snackbarBaseOptions } from "../../utils/snackbar";
 
 function RegisterVehicle() {
   const [vehicleData, setVehicleData] = useState({
@@ -107,12 +109,25 @@ function RegisterVehicle() {
       setLoading(true);
       try {
         await registerVehicle(vehicleData);
+        enqueueSnackbar("Vehicle registered successfully", {
+          variant: "success",
+          ...snackbarBaseOptions,
+        });
         navigate("/vehicles");
       } catch (error) {
+        enqueueSnackbar("An error occured while adding vehicle", {
+          variant: "error",
+          ...snackbarBaseOptions,
+        });
         console.log("Error adding vehicle: ", error);
       } finally {
         setLoading(false);
       }
+    } else {
+      enqueueSnackbar("Please add required fields to proceed", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
     }
   };
 

@@ -13,6 +13,8 @@ import "./users.css";
 import { colors } from "../../assets";
 import { deleteUserWithId, getAllUsers } from "../../api/users";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { enqueueSnackbar } from "notistack";
+import { snackbarBaseOptions } from "../../utils/snackbar";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -30,6 +32,10 @@ export default function Users() {
   const handleDeleteUser = async (id) => {
     try {
       await deleteUserWithId(id);
+      enqueueSnackbar("User deleted successfully", {
+        variant: "success",
+        ...snackbarBaseOptions,
+      });
       await fetchUsers();
     } catch (err) {
       console.error(err);

@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import GroupIcon from "@mui/icons-material/Group";
 import "./RegisterUser.css";
 import { registerUser } from "../../api/auth";
+import { enqueueSnackbar } from "notistack";
+import { snackbarBaseOptions } from "../../utils/snackbar.js";
 
 function RegisterUser() {
   const [userData, setUserData] = useState({
@@ -90,9 +92,18 @@ function RegisterUser() {
       setLoading(true);
       const user = await registerUser(userData);
       setLoading(false);
+      enqueueSnackbar("User registered", {
+        variant: "success",
+        ...snackbarBaseOptions,
+      });
       if (user?.uid) {
         navigate("/users");
       }
+    } else {
+      enqueueSnackbar("Please add required fields to proceed", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
     }
   };
 
