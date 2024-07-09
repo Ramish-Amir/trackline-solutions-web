@@ -67,13 +67,12 @@ const Trips = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>Owner Name</TableCell>
               <TableCell>Duration</TableCell>
               <TableCell>Starting Address</TableCell>
               <TableCell>Start Time</TableCell>
               <TableCell>Ending Address</TableCell>
               <TableCell>End Time</TableCell>
-              <TableCell>Owner Name</TableCell>
               <TableCell>Vehicle Name</TableCell>
               <TableCell></TableCell>
             </TableRow>
@@ -81,13 +80,12 @@ const Trips = () => {
           <TableBody>
             {trips.map((trip) => (
               <TableRow key={trip.id}>
-                <TableCell>{(trip.id)}</TableCell>
+                <TableCell>{(trip.ownerName)}</TableCell>
                 <TableCell>{trip.duration}</TableCell>
                 <TableCell>{trip.startingAddress}</TableCell>
                 <TableCell>{new Date(trip.startingTime *1000).toLocaleString()}</TableCell>
                 <TableCell>{trip.endingAddress}</TableCell>
                 <TableCell>{new Date(trip.endingTime*1000).toLocaleString()}</TableCell>
-                <TableCell>{trip.ownerName}</TableCell>
                 <TableCell>{trip.company}</TableCell>
                 <TableCell>
                   <DeleteOutlineIcon
