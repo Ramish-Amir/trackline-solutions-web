@@ -12,7 +12,7 @@ import './vehicles.css';
 
 const Vehicle = () => {
   const [vehicles, setVehicles] = useState([
-    { username: 'John Doe', vehicleNumber: 'ABC123', id: 1 },
+    { username: 'Naman Goyal', vehicleNumber: 'ABC123', id: 1 },
     { username: 'Jane Smith', vehicleNumber: 'XYZ456', id: 2 },
   ]);
 
