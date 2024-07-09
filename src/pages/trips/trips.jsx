@@ -43,7 +43,7 @@ const Trips = () => {
       <div className="pageHeader">
         <h1>Vehicles</h1>
         <div className="headerActions">
-          <Button
+          {/* <Button
             sx={{
               bgcolor: colors.primary,
               borderRadius: "10px",
@@ -57,7 +57,7 @@ const Trips = () => {
             onClick={() => navigate("/vehicles/register")}
           >
             New Vehicle
-          </Button>
+          </Button> */}
         </div>
       </div>
       <TableContainer>
