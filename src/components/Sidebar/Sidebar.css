@@ -2,6 +2,18 @@
     position: relative;
 }
 
+.sidebarLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.sidebarLogo > img {
+    width: 40%;
+}
+
 .sidebarItem {
     display: flex;
     flex-direction: row;

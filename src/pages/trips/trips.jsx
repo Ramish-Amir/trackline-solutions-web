@@ -9,15 +9,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./trips.css";
-import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
-import { colors } from "../../assets";
-import { useNavigate } from "react-router-dom";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const Trips = () => {
-  const navigate = useNavigate();
-
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -80,12 +74,16 @@ const Trips = () => {
           <TableBody>
             {trips.map((trip) => (
               <TableRow key={trip.id}>
-                <TableCell>{(trip.ownerName)}</TableCell>
+                <TableCell>{trip.ownerName}</TableCell>
                 <TableCell>{trip.duration}</TableCell>
                 <TableCell>{trip.startingAddress}</TableCell>
-                <TableCell>{new Date(trip.startingTime *1000).toLocaleString()}</TableCell>
+                <TableCell>
+                  {new Date(trip.startingTime * 1000).toLocaleString()}
+                </TableCell>
                 <TableCell>{trip.endingAddress}</TableCell>
-                <TableCell>{new Date(trip.endingTime*1000).toLocaleString()}</TableCell>
+                <TableCell>
+                  {new Date(trip.endingTime * 1000).toLocaleString()}
+                </TableCell>
                 <TableCell>{trip.company}</TableCell>
                 <TableCell>
                   <DeleteOutlineIcon

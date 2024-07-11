@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useContext } from "react";
-import { colors } from "../../assets";
+import { assets, colors } from "../../assets";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ModeOfTravelIcon from "@mui/icons-material/ModeOfTravel";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
@@ -56,7 +56,10 @@ function Sidebar() {
         position: "static",
       }}
     >
-      <Box
+      <div className="sidebarLogo" onClick={() => navigate("/")}>
+        <img src={assets.whiteLogo} alt={"Trackline solution logo"} />
+      </div>
+      {/* <Box
         sx={{
           textAlign: "center",
           alignContent: "center",
@@ -69,7 +72,7 @@ function Sidebar() {
         onClick={() => navigate("/")}
       >
         <strong>Trackline Solutions</strong>
-      </Box>
+      </Box> */}
 
       {sidebarItems?.map((item, index) => (
         <NavLink
