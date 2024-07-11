@@ -4,14 +4,12 @@ import Vehicles from "./pages/vehicles/vehicles";
 import Trips from "./pages/trips/trips";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
-<<<<<<< Updated upstream
-=======
+
 import RegisterUser from "./components/RegisterUser/RegisterUser";
 import RegisterVehicle from "./components/RegisterVehicle/RegisterVehicle";
 import TripDetails from "./pages/tripDetails/tripDetails";
 import EditVehicle from "./components/EditVehicle/EditVehicle";
 
->>>>>>> Stashed changes
 
 export const routes = [
   {
@@ -24,9 +22,7 @@ export const routes = [
   },
   {
     path: "/vehicles",
-<<<<<<< Updated upstream
     component: <Vehicles />,
-=======
     children: [
       {
         path: "",
@@ -41,7 +37,6 @@ export const routes = [
         element: <EditVehicle />
       }
     ],
->>>>>>> Stashed changes
   },
   {
     path: "/trips",
