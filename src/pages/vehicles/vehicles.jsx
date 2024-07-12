@@ -33,7 +33,7 @@ const Vehicle = () => {
       const res = await getAllVehicles();
       setVehicles(res);
     } catch (err) {
-      enqueueSnackbar("Ann error occured while deleting vehicle", {
+      enqueueSnackbar("An error occured while fetching vehicles", {
         variant: "error",
         ...snackbarBaseOptions,
       });
@@ -53,7 +53,7 @@ const Vehicle = () => {
       await fetchVehicles();
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Ann error occured while deleting vehicle", {
+      enqueueSnackbar("An error occured while deleting vehicle", {
         variant: "error",
         ...snackbarBaseOptions,
       });
