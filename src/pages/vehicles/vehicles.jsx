@@ -101,7 +101,11 @@ const Vehicle = () => {
           </TableHead>
           <TableBody>
             {vehicles.map((vehicle) => (
-              <TableRow key={vehicle.id}>
+              <TableRow
+                key={vehicle.id}
+                sx={{ cursor: "pointer" }}
+                onClick={() => navigate(`/vehicles/${vehicle.id}`)}
+              >
                 <TableCell>{vehicle.make}</TableCell>
                 <TableCell>{vehicle.company}</TableCell>
                 <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>
