@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Page from "../../layouts/Page/Page";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Fade } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import "./users.css";
 import { colors } from "../../assets";
@@ -15,18 +15,40 @@ import { deleteUserWithId, getAllUsers } from "../../api/users";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { enqueueSnackbar } from "notistack";
 import { snackbarBaseOptions } from "../../utils/snackbar";
+import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const columnNames = [
+    "First Name",
+    "Last Name",
+    "Email",
+    "No of Trips",
+    "No of Vehicles",
+    "",
+  ];
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
-    const res = await getAllUsers();
-    setUsers(res);
+    try {
+      setLoading(true);
+      const res = await getAllUsers();
+      setUsers(res);
+    } catch (err) {
+      console.log(err);
+      enqueueSnackbar("An error occured while fetching users", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDeleteUser = async (id) => {
@@ -72,33 +94,36 @@ export default function Users() {
         >
           <TableHead>
             <TableRow>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>No of Trips</TableCell>
-              <TableCell>No of Vehicles</TableCell>
-              <TableCell></TableCell>
+              {columnNames?.map((col) => (
+                <TableCell>{col}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map((user, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell>{user.firstName}</TableCell>
-                <TableCell>{user.lastName}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.totalTrips}</TableCell>
-                <TableCell>{user.totalVehicles}</TableCell>
-                <TableCell>
-                  <DeleteOutlineIcon
-                    sx={{ color: "red", cursor: "pointer" }}
-                    onClick={() => handleDeleteUser(user?.id)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {loading ? (
+              <TableLoadingSpinner />
+            ) : (
+              users?.map((user, index) => (
+                <Fade in={!loading} timeout={1000}>
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{user.firstName}</TableCell>
+                    <TableCell>{user.lastName}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.totalTrips}</TableCell>
+                    <TableCell>{user.totalVehicles}</TableCell>
+                    <TableCell>
+                      <DeleteOutlineIcon
+                        sx={{ color: "red", cursor: "pointer" }}
+                        onClick={() => handleDeleteUser(user?.id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Fade>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
