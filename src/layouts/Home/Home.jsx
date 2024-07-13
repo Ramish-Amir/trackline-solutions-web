@@ -1,10 +1,9 @@
-import { Grid } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { routes } from "../../routes";
-import { colors } from "../../assets";
 import { AuthContext } from "../../context/AuthContext";
+import "./Home.css";
 
 function Home() {
   const auth = useContext(AuthContext);
@@ -17,11 +16,11 @@ function Home() {
   }, []);
 
   return (
-    <Grid container spacing={2} sx={{ bgcolor: colors.background }}>
-      <Grid item xs={2.5}>
+    <div className="homeContainer">
+      <div className="sidebarContainerHome">
         <Sidebar />
-      </Grid>
-      <Grid item xs={9.5} sx={{ p: "15px" }}>
+      </div>
+      <div className="pagesContainerHome">
         <Routes>
           {routes?.map((route, index) => (
             <Route key={index} path={route.path} element={route.element}>
@@ -37,8 +36,8 @@ function Home() {
             </Route>
           ))}
         </Routes>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 
