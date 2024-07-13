@@ -11,7 +11,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <LoadScript googleMapsApiKey="AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s">
+      <LoadScript
+        googleMapsApiKey={
+          process.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
+          "AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s"
+        }
+      >
         <AuthProvider>
           <App />
         </AuthProvider>

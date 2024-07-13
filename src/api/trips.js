@@ -38,6 +38,7 @@ export const getAllTrips = async () => {
       const tripsSnapshot = await getDocs(tripsCollectionRef);
 
       tripsSnapshot.forEach((tripDoc) => {
+        console.log("TRIPS >> ", tripDoc.data());
         trips.push({
           id: tripDoc?.id,
           ownerId: userId,
