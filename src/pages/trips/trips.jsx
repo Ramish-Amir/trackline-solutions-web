@@ -77,11 +77,9 @@ const Trips = () => {
                     <TableCell>{trip.duration}</TableCell>
                     <TableCell>{trip.startingAddress}</TableCell>
                     <TableCell>
-                      {new Date(trip.startingTime * 1000).toLocaleString()}
-                    </TableCell>
+                    <TableCell>{new Date(trip.startingTime.seconds*1000+trip.startingTime.seconds/1000000).toLocaleString()}</TableCell>
                     <TableCell>{trip.endingAddress}</TableCell>
-                    <TableCell>
-                      {new Date(trip.endingTime * 1000).toLocaleString()}
+                    <TableCell>{new Date(trip.endingTime.seconds*1000+trip.endingTime.seconds/1000000).toLocaleString()}</TableCell>
                     </TableCell>
                     <TableCell>{trip.company}</TableCell>
                   </TableRow>
