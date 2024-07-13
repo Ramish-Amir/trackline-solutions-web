@@ -14,27 +14,49 @@ import { colors } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import { deleteVehicle, getAllVehicles } from "../../api/vehicle";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { enqueueSnackbar } from "notistack";
+import { snackbarBaseOptions } from "../../utils/snackbar";
 
 const Vehicle = () => {
   const navigate = useNavigate();
 
   const [vehicles, setVehicles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchVehicles();
   }, []);
 
   const fetchVehicles = async () => {
-    const res = await getAllVehicles();
-    setVehicles(res);
+    try {
+      setLoading(true);
+      const res = await getAllVehicles();
+      setVehicles(res);
+    } catch (err) {
+      enqueueSnackbar("Ann error occured while deleting vehicle", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDeleteVehicle = async (ownerId, vehicleId) => {
     try {
       await deleteVehicle(ownerId, vehicleId);
+      enqueueSnackbar("Vehicle deleted successfully", {
+        variant: "success",
+        ...snackbarBaseOptions,
+      });
       await fetchVehicles();
     } catch (error) {
       console.error(error);
+      enqueueSnackbar("Ann error occured while deleting vehicle", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
     }
   };
 
