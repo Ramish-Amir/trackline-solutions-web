@@ -9,19 +9,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./vehicles.css";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, Fade } from "@mui/material";
 import { colors } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import { deleteVehicle, getAllVehicles } from "../../api/vehicle";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { enqueueSnackbar } from "notistack";
 import { snackbarBaseOptions } from "../../utils/snackbar";
+import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
 
 const Vehicle = () => {
   const navigate = useNavigate();
 
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const columnNames = [
+    "Make",
+    "Company",
+    "Registration Number",
+    "Fuel Type",
+    "Year of Manufacture",
+    "Owner",
+    "Total Trips",
+    "",
+  ];
 
   useEffect(() => {
     fetchVehicles();
@@ -33,7 +45,7 @@ const Vehicle = () => {
       const res = await getAllVehicles();
       setVehicles(res);
     } catch (err) {
-      enqueueSnackbar("Ann error occured while deleting vehicle", {
+      enqueueSnackbar("An error occured while fetching vehicles", {
         variant: "error",
         ...snackbarBaseOptions,
       });
@@ -53,7 +65,7 @@ const Vehicle = () => {
       await fetchVehicles();
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Ann error occured while deleting vehicle", {
+      enqueueSnackbar("An error occured while deleting vehicle", {
         variant: "error",
         ...snackbarBaseOptions,
       });
@@ -89,40 +101,37 @@ const Vehicle = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>Make</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Registration Number</TableCell>
-              <TableCell>Fuel Type</TableCell>
-              <TableCell>Year of Manufacture</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell>Total Trips</TableCell>
-              <TableCell></TableCell>
+              {columnNames?.map((col) => (
+                <TableCell>{col}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {vehicles.map((vehicle) => (
-              <TableRow
-                key={vehicle.id}
-                sx={{ cursor: "pointer" }}
-                onClick={() => navigate(`/vehicles/${vehicle.id}`)}
-              >
-                <TableCell>{vehicle.make}</TableCell>
-                <TableCell>{vehicle.company}</TableCell>
-                <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>
-                <TableCell>{vehicle.fuelType}</TableCell>
-                <TableCell>{vehicle.yearOfManufacture}</TableCell>
-                <TableCell>{vehicle.ownerName}</TableCell>
-                <TableCell>{vehicle.vehicleTotalTrips}</TableCell>
-                <TableCell>
-                  <DeleteOutlineIcon
-                    sx={{ color: "red", cursor: "pointer" }}
-                    onClick={() =>
-                      handleDeleteVehicle(vehicle?.ownerId, vehicle?.id)
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {loading ? (
+              <TableLoadingSpinner />
+            ) : (
+              vehicles.map((vehicle) => (
+                <Fade in={!loading} timeout={1000}>
+                  <TableRow key={vehicle.id}>
+                    <TableCell>{vehicle.make}</TableCell>
+                    <TableCell>{vehicle.company}</TableCell>
+                    <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>
+                    <TableCell>{vehicle.fuelType}</TableCell>
+                    <TableCell>{vehicle.yearOfManufacture}</TableCell>
+                    <TableCell>{vehicle.ownerName}</TableCell>
+                    <TableCell>{vehicle.vehicleTotalTrips}</TableCell>
+                    <TableCell>
+                      <DeleteOutlineIcon
+                        sx={{ color: "red", cursor: "pointer" }}
+                        onClick={() =>
+                          handleDeleteVehicle(vehicle?.ownerId, vehicle?.id)
+                        }
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Fade>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -1,6 +1,5 @@
 import Page from "../../layouts/Page/Page";
 import { getAllTrips } from "../../api/trips";
-
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,50 +8,51 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./trips.css";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { enqueueSnackbar } from "notistack";
+import { snackbarBaseOptions } from "../../utils/snackbar";
+import { Fade } from "@mui/material";
+
+import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
 
 const Trips = () => {
   const [trips, setTrips] = useState([]);
+  const [loadingTrips, setLoadingTrips] = useState(false);
+
+  const columnNames = [
+    "Owner Name",
+    "Duration",
+    "Starting Addres",
+    "Start Time",
+    "Ending Address",
+    "End Time",
+    "Vehicle Name",
+  ];
 
   useEffect(() => {
     fetchTrips();
   }, []);
 
   const fetchTrips = async () => {
-    const trips = await getAllTrips();
-    console.log("TRIPs >> ", trips);
-    setTrips(trips);
+    try {
+      setLoadingTrips(true);
+      const trips = await getAllTrips();
+      setTrips(trips);
+    } catch (err) {
+      console.log(err);
+      enqueueSnackbar("An error occured while fetching trips", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
+    } finally {
+      setLoadingTrips(false);
+    }
   };
 
-  // const handleDeleteVehicle = async (ownerId, vehicleId) => {
-  //   try {
-  //     await deleteVehicle(ownerId, vehicleId);
-  //     await fetchVehicles();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   return (
     <Page>
       <div className="pageHeader">
-        <h1>Vehicles</h1>
-        <div className="headerActions">
-          {/* <Button
-            sx={{
-              bgcolor: colors.primary,
-              borderRadius: "10px",
-              "&:hover": {
-                opacity: 0.9,
-                bgcolor: colors.primary,
-              },
-            }}
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={() => navigate("/vehicles/register")}
-          >
-            New Vehicle
-          </Button> */}
-        </div>
+        <h1>Trips</h1>
+        <div className="headerActions"></div>
       </div>
       <TableContainer>
         <Table
@@ -61,40 +61,31 @@ const Trips = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>Owner Name</TableCell>
-              <TableCell>Duration</TableCell>
-              <TableCell>Starting Address</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>Ending Address</TableCell>
-              <TableCell>End Time</TableCell>
-              <TableCell>Vehicle Name</TableCell>
-              <TableCell></TableCell>
+              {columnNames?.map((cell) => (
+                <TableCell>{cell}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {trips.map((trip) => (
-              <TableRow key={trip.id}>
-                <TableCell>{trip.ownerName}</TableCell>
-                <TableCell>{trip.duration}</TableCell>
-                <TableCell>{trip.startingAddress}</TableCell>
-                <TableCell>
-                  {new Date(trip.startingTime * 1000).toLocaleString()}
-                </TableCell>
-                <TableCell>{trip.endingAddress}</TableCell>
-                <TableCell>
-                  {new Date(trip.endingTime * 1000).toLocaleString()}
-                </TableCell>
-                <TableCell>{trip.company}</TableCell>
-                <TableCell>
-                  <DeleteOutlineIcon
-                    sx={{ color: "red", cursor: "pointer" }}
-                    // onClick={() =>
-                    //   handleDeleteVehicle(vehicle?.ownerId, vehicle?.id)
-                    // }
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {loadingTrips ? (
+              <TableLoadingSpinner />
+            ) : (
+              trips.map((trip) => (
+                <Fade in={!loadingTrips} timeout={1000}>
+                  <TableRow key={trip.id}>
+                    <TableCell>{trip.ownerName}</TableCell>
+                    <TableCell>{trip.duration}</TableCell>
+                    <TableCell>{trip.startingAddress}</TableCell>
+                    
+                    <TableCell>{new Date(trip.startingTime.seconds*1000+trip.startingTime.seconds/1000000).toLocaleString()}</TableCell>
+                    <TableCell>{trip.endingAddress}</TableCell>
+                    <TableCell>{new Date(trip.endingTime.seconds*1000+trip.endingTime.seconds/1000000).toLocaleString()}</TableCell>
+                    
+                    <TableCell>{trip.company}</TableCell>
+                  </TableRow>
+                </Fade>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
