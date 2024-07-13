@@ -43,23 +43,12 @@ function Sidebar() {
   };
 
   return (
-    <Box
-      className="sidebarContainer"
-      sx={{
-        bgcolor: colors.primary,
-        m: "15px 0 15px 30px",
-        px: "10px",
-        py: "15px",
-        borderRadius: "25px",
-        minHeight: "calc(100vh - 30px - 30px)",
-        color: colors.textLight,
-        position: "static",
-      }}
-    >
-      <div className="sidebarLogo" onClick={() => navigate("/")}>
-        <img src={assets.whiteLogo} alt={"Trackline solution logo"} />
-      </div>
-      {/* <Box
+    <div className="sidebarWrap">
+      <div className="sidebarContainer">
+        <div className="sidebarLogo" onClick={() => navigate("/")}>
+          <img src={assets.whiteLogo} alt={"Trackline solution logo"} />
+        </div>
+        {/* <Box
         sx={{
           textAlign: "center",
           alignContent: "center",
@@ -74,30 +63,31 @@ function Sidebar() {
         <strong>Trackline Solutions</strong>
       </Box> */}
 
-      {sidebarItems?.map((item, index) => (
-        <NavLink
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "sidebarItem active"
-              : isActive
-              ? "sidebarItem active"
-              : "sidebarItem"
-          }
-          key={index}
-          to={item.to}
-        >
-          <div className="item-icon">{item.icon}</div>
-          <span>{item.label}</span>
-        </NavLink>
-      ))}
+        {sidebarItems?.map((item, index) => (
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "sidebarItem active"
+                : isActive
+                ? "sidebarItem active"
+                : "sidebarItem"
+            }
+            key={index}
+            to={item.to}
+          >
+            <div className="item-icon">{item.icon}</div>
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
 
-      <div className="logoutBtn sidebarItem" onClick={handleLogout}>
-        <div className="item-icon">
-          <LogoutIcon />
+        <div className="logoutBtn sidebarItem" onClick={handleLogout}>
+          <div className="item-icon">
+            <LogoutIcon />
+          </div>
+          <span>Logout</span>
         </div>
-        <span>Logout</span>
       </div>
-    </Box>
+    </div>
   );
 }
 

@@ -1,5 +1,17 @@
-.sidebarContainer {
+.sidebarWrap {
     position: relative;
+    /* width: 60%; */
+}
+
+.sidebarContainer {
+    background-color: #004040;
+    margin: 15px 0 15px 30px;
+    padding: 15px 10px;
+    border-radius: 25px;
+    min-height: calc(100vh - 30px);
+    color: #DDDDDD;
+    position: fixed;
+    width: 20%;
 }
 
 .sidebarLogo {
