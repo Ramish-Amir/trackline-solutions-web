@@ -94,3 +94,39 @@ export const editVehicle = async (ownerId, vehicleId, newData) => {
     throw new Error("Failed to update vehicle.");
   }
 };
+
+
+export const fetchVehicleById = async (vehicleId) => {
+  try {
+    const vehicleDocRef = doc(db, DB_COLLECTIONS.VEHICLES, vehicleId);
+    const vehicleDoc = await getDoc(vehicleDocRef);
+
+    if (vehicleDoc.exists()) {
+      return vehicleDoc.data();
+    } else {
+      console.log(`Vehicle with id ${vehicleId} not found.`);
+      return null; // Or throw an error if necessary
+    }
+  } catch (error) {
+    console.error("Error fetching vehicle:", error);
+    throw new Error("Failed to fetch vehicle.");
+  }
+};
+
+export const getAllUsers = async () => {
+  const users = [];
+
+  try {
+    const usersCollection = collection(db, DB_COLLECTIONS.USERS);
+    const usersSnapshot = await getDocs(usersCollection);
+
+    usersSnapshot.forEach((doc) => {
+      users.push({ id: doc.id, ...doc.data() });
+    });
+
+    return users;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users.");
+  }
+};

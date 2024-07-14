@@ -12,13 +12,10 @@ import {
 } from "@mui/material";
 import Page from "../../layouts/Page/Page";
 import { colors } from "../../assets";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import "./editVehicle.css";
-import { editVehicle } from "../../api/vehicle"; // updated import to editVehicle
-import { getAllUsers } from "../../api/users";
-import { enqueueSnackbar } from "notistack";
-import { snackbarBaseOptions } from "../../utils/snackbar";
+import { editVehicle, getAllUsers, fetchVehicleById } from "../../api/vehicle"; // updated import to include getAllUsers
 
 function EditVehicle() {
   const [vehiclesData, setVehiclesData] = useState({
@@ -34,7 +31,36 @@ function EditVehicle() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+  const { vehicleId } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchVehicle = async () => {
+      try {
+        // Assuming you have a function to fetch a single vehicle by id
+        const vehicle = await fetchVehicleById(vehicleId); // Implement this function to fetch vehicle details
+        console.log(vehicle);
+        if (vehicle) {
+          setVehiclesData({
+            company: vehicle.company,
+            make: vehicle.make,
+            yearOfManufacture: vehicle.yearOfManufacture,
+            vehicleRegistrationNo: vehicle.vehicleRegistrationNo,
+            fuelType: vehicle.fuelType,
+            owner: vehicle.ownerId,
+          });
+        } else {
+          console.error(`Vehicle with id ${vehicleId} not found.`);
+          // Handle case where vehicle is not found
+        }
+      } catch (error) {
+        console.error("Error fetching vehicle:", error);
+        // Handle error, e.g., show an error message
+      }
+    };
+
+    fetchVehicle();
+  }, [vehicleId]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -52,78 +78,35 @@ function EditVehicle() {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    try {
+      setLoading(true);
+      await editVehicle(vehiclesData.owner, vehicleId, {
+        company: vehiclesData.company,
+        make: vehiclesData.make,
+        yearOfManufacture: vehiclesData.yearOfManufacture,
+        vehicleRegistrationNo: vehiclesData.vehicleRegistrationNo,
+        fuelType: vehiclesData.fuelType,
+      });
+      console.log("Vehicle updated successfully:", vehicleId);
+      // Handle success, e.g., show a success message
+    } catch (error) {
+      console.error("Failed to update vehicle:", error);
+      // Handle error, e.g., show an error message
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
-    for (let year = 1990; year <= currentYear; year++) {
-      years.push(year);
+    for (let year = currentYear; year >= 1900; year--) {
+      years.push(year.toString());
     }
     return years;
-  };
-
-  const validate = () => {
-    let tempErrors = {};
-    let isValid = true;
-
-    if (!vehiclesData.company) {
-      tempErrors.company = "Company is required";
-      isValid = false;
-    }
-
-    if (!vehiclesData.make) {
-      tempErrors.make = "Make is required";
-      isValid = false;
-    }
-
-    if (!vehiclesData.yearOfManufacture) {
-      tempErrors.yearOfManufacture = "Year of Manufacture is required";
-      isValid = false;
-    } else if (!/^\d{4}$/.test(vehiclesData.yearOfManufacture)) {
-      tempErrors.yearOfManufacture =
-        "Year of Manufacture should be a valid year";
-      isValid = false;
-    }
-
-    if (!vehiclesData.vehicleRegistrationNo) {
-      tempErrors.vehicleRegistrationNo = "Registration Number is required";
-      isValid = false;
-    }
-
-    if (!vehiclesData.fuelType) {
-      tempErrors.fuelType = "Fuel Type is required";
-      isValid = false;
-    }
-
-    if (!vehiclesData.owner) {
-      tempErrors.owner = "Owner is required";
-      isValid = false;
-    }
-
-    setErrors(tempErrors);
-    return isValid;
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      setLoading(true);
-      try {
-        await editVehicle(vehiclesData.owner, vehiclesData.id, {
-          company: vehiclesData.company,
-          make: vehiclesData.make,
-          yearOfManufacture: vehiclesData.yearOfManufacture,
-          vehicleRegistrationNo: vehiclesData.vehicleRegistrationNo,
-          fuelType: vehiclesData.fuelType,
-          // Add other fields as needed
-        });
-        console.log("Vehicle updated successfully:", vehiclesData.id);
-        // Handle success, e.g., show a success message
-      } catch (error) {
-        console.error("Failed to update vehicle:", error);
-        // Handle error, e.g., show an error message
-      } finally {
-        setLoading(false);
-      }
-    }
   };
 
   return (
@@ -204,12 +187,12 @@ function EditVehicle() {
                     </MenuItem>
                   ))}
                 </Select>
+                {errors.yearOfManufacture && (
+                  <Typography variant="caption" color="error">
+                    {errors.yearOfManufacture}
+                  </Typography>
+                )}
               </FormControl>
-              {errors.yearOfManufacture && (
-                <Typography variant="caption" color="error">
-                  {errors.yearOfManufacture}
-                </Typography>
-              )}
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -245,12 +228,12 @@ function EditVehicle() {
                   <MenuItem value="Hybrid">Hybrid</MenuItem>
                   <MenuItem value="Diesel">Diesel</MenuItem>
                 </Select>
+                {errors.fuelType && (
+                  <Typography variant="caption" color="error">
+                    {errors.fuelType}
+                  </Typography>
+                )}
               </FormControl>
-              {errors.fuelType && (
-                <Typography variant="caption" color="error">
-                  {errors.fuelType}
-                </Typography>
-              )}
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.owner}>
@@ -271,12 +254,12 @@ function EditVehicle() {
                     </MenuItem>
                   ))}
                 </Select>
+                {errors.owner && (
+                  <Typography variant="caption" color="error">
+                    {errors.owner}
+                  </Typography>
+                )}
               </FormControl>
-              {errors.owner && (
-                <Typography variant="caption" color="error">
-                  {errors.owner}
-                </Typography>
-              )}
             </Grid>
           </Grid>
           <div className="editButton">
