@@ -61,8 +61,8 @@ const Trips = () => {
         >
           <TableHead>
             <TableRow>
-              {columnNames?.map((cell) => (
-                <TableCell>{cell}</TableCell>
+              {columnNames?.map((cell, index) => (
+                <TableCell key={index}>{cell}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -71,16 +71,26 @@ const Trips = () => {
               <TableLoadingSpinner />
             ) : (
               trips.map((trip) => (
-                <Fade in={!loadingTrips} timeout={1000}>
-                  <TableRow key={trip.id}>
+                <Fade key={trip.id} in={!loadingTrips} timeout={1000}>
+                  <TableRow>
                     <TableCell>{trip.ownerName}</TableCell>
                     <TableCell>{trip.duration}</TableCell>
                     <TableCell>{trip.startingAddress}</TableCell>
-                    
-                    <TableCell>{new Date(trip.startingTime.seconds*1000+trip.startingTime.seconds/1000000).toLocaleString()}</TableCell>
+
+                    <TableCell>
+                      {new Date(
+                        trip.startingTime.seconds * 1000 +
+                          trip.startingTime.seconds / 1000000
+                      ).toLocaleString()}
+                    </TableCell>
                     <TableCell>{trip.endingAddress}</TableCell>
-                    <TableCell>{new Date(trip.endingTime.seconds*1000+trip.endingTime.seconds/1000000).toLocaleString()}</TableCell>
-                    
+                    <TableCell>
+                      {new Date(
+                        trip.endingTime.seconds * 1000 +
+                          trip.endingTime.seconds / 1000000
+                      ).toLocaleString()}
+                    </TableCell>
+
                     <TableCell>{trip.company}</TableCell>
                   </TableRow>
                 </Fade>
