@@ -31,14 +31,14 @@ function EditVehicle() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { vehicleId } = useParams();
+  const { vehicleId, ownerId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
         // Assuming you have a function to fetch a single vehicle by id
-        const vehicle = await fetchVehicleById(vehicleId); // Implement this function to fetch vehicle details
+        const vehicle = await fetchVehicleById(ownerId, vehicleId); // Implement this function to fetch vehicle details
         console.log(vehicle);
         if (vehicle) {
           setVehiclesData({

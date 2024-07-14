@@ -7,7 +7,9 @@ import {
   getDoc,
   getDocs,
   increment,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { DB_COLLECTIONS } from "./auth";
@@ -95,22 +97,55 @@ export const editVehicle = async (ownerId, vehicleId, newData) => {
   }
 };
 
+// export const fetchVehicleById = async (vehicleId) => {
+//   try {
+//     const vehicleDocRef = doc(db, DB_COLLECTIONS.VEHICLES, vehicleId);
+//     const vehicleDoc = await getDoc(vehicleDocRef);
 
-export const fetchVehicleById = async (vehicleId) => {
-  try {
-    const vehicleDocRef = doc(db, DB_COLLECTIONS.VEHICLES, vehicleId);
-    const vehicleDoc = await getDoc(vehicleDocRef);
+//     if (vehicleDoc.exists()) {
+//       return vehicleDoc.data();
+//     } else {
+//       console.log(`Vehicle with id ${vehicleId} not found.`);
+//       return null; // Or throw an error if necessary
+//     }
+//   } catch (error) {
+//     console.error("Error fetching vehicle:", error);
+//     throw new Error("Failed to fetch vehicle.");
+//   }
+// };
 
-    if (vehicleDoc.exists()) {
-      return vehicleDoc.data();
-    } else {
-      console.log(`Vehicle with id ${vehicleId} not found.`);
-      return null; // Or throw an error if necessary
+export const fetchVehicleById = async (ownerId, vehicleId) => {
+  // Reference to the specific vehicle document
+  const vehicleDocRef = doc(
+    db,
+    DB_COLLECTIONS.USERS,
+    ownerId,
+    DB_COLLECTIONS.VEHICLES,
+    vehicleId
+  );
+
+  // Fetch the vehicle document
+  const vehicleDoc = await getDoc(vehicleDocRef);
+
+  if (vehicleDoc.exists()) {
+    // Fetch the owner document
+    const ownerDocRef = doc(db, DB_COLLECTIONS.USERS, ownerId);
+    const ownerDoc = await getDoc(ownerDocRef);
+
+    if (ownerDoc.exists()) {
+      const { firstName, lastName } = ownerDoc.data();
+      const ownerName = `${firstName} ${lastName}`;
+      return {
+        id: vehicleDoc.id,
+        ownerId,
+        ownerName,
+        ...vehicleDoc.data(),
+      };
     }
-  } catch (error) {
-    console.error("Error fetching vehicle:", error);
-    throw new Error("Failed to fetch vehicle.");
   }
+
+  // If no vehicle or owner is found
+  return null;
 };
 
 export const getAllUsers = async () => {

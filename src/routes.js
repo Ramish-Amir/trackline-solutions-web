@@ -39,7 +39,7 @@ export const routes = [
         element: <RegisterVehicle />,
       },
       {
-        path: "/vehicles/:id",
+        path: "/vehicles/:vehicleId/:ownerId",
         element: <EditVehicle />,
       },
     ],
