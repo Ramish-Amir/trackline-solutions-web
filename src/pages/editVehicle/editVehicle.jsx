@@ -15,7 +15,17 @@ import { colors } from "../../assets";
 import { useNavigate, useParams } from "react-router-dom";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import "./editVehicle.css";
+import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import { editVehicle, getAllUsers, fetchVehicleById } from "../../api/vehicle"; // updated import to include getAllUsers
+
+const snackbarBaseOptions = {
+  autoHideDuration: 3000,
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "right",
+  },
+};
 
 function EditVehicle() {
   const [vehiclesData, setVehiclesData] = useState({
@@ -80,7 +90,6 @@ function EditVehicle() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
     try {
       setLoading(true);
       await editVehicle(vehiclesData.owner, vehicleId, {
@@ -90,15 +99,22 @@ function EditVehicle() {
         vehicleRegistrationNo: vehiclesData.vehicleRegistrationNo,
         fuelType: vehiclesData.fuelType,
       });
-      console.log("Vehicle updated successfully:", vehicleId);
-      // Handle success, e.g., show a success message
+      enqueueSnackbar("Vehicle edited successfully", {
+        variant: "success",
+        ...snackbarBaseOptions,
+      });
+      navigate("/vehicles");
     } catch (error) {
+      enqueueSnackbar("An error occurred while editing the vehicle", {
+        variant: "error",
+        ...snackbarBaseOptions,
+      });
       console.error("Failed to update vehicle:", error);
-      // Handle error, e.g., show an error message
     } finally {
       setLoading(false);
     }
   };
+  
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
@@ -237,7 +253,7 @@ function EditVehicle() {
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.owner}>
-                <InputLabel id="owner-label">Owner</InputLabel>
+                <InputLabel disabled={true} id="owner-label">Owner</InputLabel>
                 <Select
                   labelId="owner-label"
                   id="owner"
@@ -247,6 +263,7 @@ function EditVehicle() {
                   sx={{
                     borderRadius: "12px",
                   }}
+                  disabled={true} 
                 >
                   {users.map((user) => (
                     <MenuItem key={user.id} value={user.id}>
