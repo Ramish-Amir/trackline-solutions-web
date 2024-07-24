@@ -114,7 +114,6 @@ function EditVehicle() {
       setLoading(false);
     }
   };
-  
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
@@ -253,7 +252,9 @@ function EditVehicle() {
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth error={!!errors.owner}>
-                <InputLabel disabled={true} id="owner-label">Owner</InputLabel>
+                <InputLabel disabled={true} id="owner-label">
+                  Owner
+                </InputLabel>
                 <Select
                   labelId="owner-label"
                   id="owner"
@@ -263,7 +264,7 @@ function EditVehicle() {
                   sx={{
                     borderRadius: "12px",
                   }}
-                  disabled={true} 
+                  disabled={true}
                 >
                   {users.map((user) => (
                     <MenuItem key={user.id} value={user.id}>
@@ -287,6 +288,7 @@ function EditVehicle() {
                 color: "white",
                 bgcolor: colors.primary,
                 borderRadius: "10px",
+                marginTop: "10px",
                 "&:hover": {
                   opacity: 0.9,
                   bgcolor: colors.primary,
@@ -297,7 +299,7 @@ function EditVehicle() {
               {loading ? (
                 <CircularProgress sx={{ color: "white" }} size={24} />
               ) : (
-                "Edit Vehicle"
+                "Update Vehicle"
               )}
             </Button>
           </div>
