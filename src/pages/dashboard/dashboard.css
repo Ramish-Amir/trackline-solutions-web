@@ -1,0 +1,78 @@
+.dashboard {
+    padding: 2rem;
+    background-color: #f4f7f8;
+  }
+  
+  .dashboard-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+    font-weight: 700;
+  }
+  
+  .main-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+  }
+  
+  .card {
+    border-radius: 8px;
+    border: none;
+    overflow: hidden; /* Ensure no content is cut off */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  }
+  /* Hover effect to lift the card and change shadow */
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  
+  .card-header {
+    border-radius: 8px 8px 0 0; /* Rounded corners for the top of the card */
+    width: 100%; /* Full width of the card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-color: var(--card-header-bg, #007bff); /* Use CSS variables for flexibility */
+    color: #ffffff;
+  }
+  
+  .card-body {
+    padding: 1rem; /* Adjust padding as needed */
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem; /* Added margin for spacing */
+  }
+  
+  .card-value {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem; /* Added margin for spacing */
+  }
+  
+  .card-change {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem; /* Added padding for better readability */
+  }
+  
+  .chart-container {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
