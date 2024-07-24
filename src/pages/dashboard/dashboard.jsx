@@ -23,13 +23,13 @@ const Dashboard = () => {
   }));
 
   const [vehicleAnimation] = useSpring(() => ({
-    number: 20,
+    number: 4,
     from: { number: 0 },
     config: { duration: 2000 },
   }));
 
   const [usersAnimation] = useSpring(() => ({
-    number: 12,
+    number: 6,
     from: { number: 0 },
     config: { duration: 2000 },
   }));
