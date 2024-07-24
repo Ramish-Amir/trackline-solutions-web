@@ -1,4 +1,6 @@
 import logo from "./logo.svg";
+import tripOriginIcon from "./tripOriginIcon.svg";
+import tripEndIcon from "./tripEndIcon.svg";
 
 export const colors = {
   primary: "#004040",
@@ -9,4 +11,6 @@ export const colors = {
 
 export const assets = {
   whiteLogo: logo,
+  tripEndIcon,
+  tripOriginIcon,
 };

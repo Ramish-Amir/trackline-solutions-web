@@ -101,8 +101,8 @@ const Vehicle = () => {
         >
           <TableHead>
             <TableRow>
-              {columnNames?.map((col) => (
-                <TableCell>{col}</TableCell>
+              {columnNames?.map((col, index) => (
+                <TableCell key={index}>{col}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -111,9 +111,8 @@ const Vehicle = () => {
               <TableLoadingSpinner />
             ) : (
               vehicles.map((vehicle) => (
-                <Fade in={!loading} timeout={1000}>
+                <Fade key={vehicle.id} in={!loading} timeout={1000}>
                   <TableRow
-                    key={vehicle.id}
                     onClick={() =>
                       navigate(`/vehicles/${vehicle.id}/${vehicle.ownerId}`)
                     }

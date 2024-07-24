@@ -5,14 +5,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router } from "react-router-dom";
+import { LoadScript } from "@react-google-maps/api";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <LoadScript
+        googleMapsApiKey={
+          process.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
+          "AIzaSyAmQ2WFmMKxZI8t7sh79U4Ryy0ZcmXta9s"
+        }
+      >
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </LoadScript>
     </Router>
   </React.StrictMode>
 );

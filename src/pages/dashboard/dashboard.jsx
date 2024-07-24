@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Page from "../../layouts/Page/Page";
 
 function Dashboard() {
