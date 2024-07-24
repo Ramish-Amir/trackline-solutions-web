@@ -47,7 +47,7 @@ export const routes = [
         element: <Trips />,
       },
       {
-        path: "/trips/:id",
+        path: "/trips/:ownerId/:vehicleId/:tripId",
         element: <TripDetails />,
       },
     ],

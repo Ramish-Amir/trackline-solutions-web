@@ -77,7 +77,11 @@ const Trips = () => {
                 <Fade key={trip.id} in={!loadingTrips} timeout={1000}>
                   <TableRow
                     sx={{ cursor: "pointer" }}
-                    onClick={() => navigate(`/trips/${trip.id}`)}
+                    onClick={() =>
+                      navigate(
+                        `/trips/${trip.ownerId}/${trip.vehicleId}/${trip.id}`
+                      )
+                    }
                   >
                     <TableCell>{trip.ownerName}</TableCell>
                     <TableCell>{trip.duration}</TableCell>

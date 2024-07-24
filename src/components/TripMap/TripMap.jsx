@@ -16,11 +16,19 @@ const mapOptions = {
   disableDefaultUI: true,
 };
 
-const TripMap = ({ encodedString, zoom, startingAddress, endingAddress }) => {
+const TripMap = ({ encodedString, startingAddress, endingAddress }) => {
   const mapRef = useRef();
   const [center, setCenter] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [decodedPath, setDecodedPath] = useState();
+
+  const [zoom, setZoom] = useState(14);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setZoom(15);
+    }, 500);
+  }, []);
 
   const onLoad = useCallback((map) => {
     mapRef.current = map;
