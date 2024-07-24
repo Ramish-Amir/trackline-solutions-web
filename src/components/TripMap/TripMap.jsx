@@ -1,7 +1,9 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { GoogleMap, OverlayView } from "@react-google-maps/api";
 import { colors } from "../../assets";
 import { decodePolylineString, getPolylineCenter } from "./tripMap";
+import AddressMarker from "./AddressMarker/AddressMarker";
+import CoordinateMarker from "./CoordinateMarker/CoordinateMarker";
 
 const containerStyle = {
   width: "100%",
@@ -14,7 +16,7 @@ const mapOptions = {
   disableDefaultUI: true,
 };
 
-const TripMap = ({ encodedString, zoom }) => {
+const TripMap = ({ encodedString, zoom, startingAddress, endingAddress }) => {
   const mapRef = useRef();
   const [center, setCenter] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -46,7 +48,8 @@ const TripMap = ({ encodedString, zoom }) => {
       const borderPath = new window.google.maps.Polyline({
         path: decodedPath,
         geodesic: true,
-        strokeColor: "#00008B", // Dark blue border
+        strokeColor: "black",
+        // strokeColor: "#00008B",
         strokeOpacity: 1.0,
         strokeWeight: 8, // Border width
       });
@@ -54,9 +57,10 @@ const TripMap = ({ encodedString, zoom }) => {
       const innerPath = new window.google.maps.Polyline({
         path: decodedPath,
         geodesic: true,
-        strokeColor: "blue", // Light blue inner color
+        strokeColor: "black",
+        // strokeColor: "blue",
         strokeOpacity: 1.0,
-        strokeWeight: 4, // Inner width
+        strokeWeight: 4,
       });
 
       borderPath.setMap(mapRef.current);
@@ -69,24 +73,6 @@ const TripMap = ({ encodedString, zoom }) => {
     }
   }, [mapLoaded, decodedPath]);
 
-  // useEffect(() => {
-  //   if (mapLoaded && decodedPath && mapRef.current) {
-  //     // const flightPath = new window.google.maps.Polyline({
-  //     //   path: decodedPath,
-  //     //   geodesic: true,
-  //     //   strokeColor: "blue",
-  //     //   strokeOpacity: 1.0,
-  //     //   strokeWeight: 5,
-  //     // });
-
-  //     // flightPath.setMap(mapRef.current);
-
-  //     return () => {
-  //       flightPath.setMap(null);
-  //     };
-  //   }
-  // }, [mapLoaded, decodedPath]);
-
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -95,7 +81,36 @@ const TripMap = ({ encodedString, zoom }) => {
       options={mapOptions}
       onLoad={onLoad}
       onUnmount={onUnmount}
-    />
+    >
+      {decodedPath && (
+        <>
+          <OverlayView
+            position={decodedPath[0]}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          >
+            <>
+              <AddressMarker
+                type={"origin"}
+                address={startingAddress || "Starting address"}
+              />
+              <CoordinateMarker type={"origin"} />
+            </>
+          </OverlayView>
+          <OverlayView
+            position={decodedPath[decodedPath.length - 1]}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+          >
+            <>
+              <AddressMarker
+                type={"end"}
+                address={endingAddress || "Ending address"}
+              />
+              <CoordinateMarker type={"end"} />
+            </>
+          </OverlayView>
+        </>
+      )}
+    </GoogleMap>
   );
 };
 
