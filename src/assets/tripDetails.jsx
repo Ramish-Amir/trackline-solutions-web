@@ -5,8 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { colors } from "../../assets";
 import { getTripDetails } from "../../api/trips";
 import TripMap from "../../components/TripMap/TripMap.jsx";
-import startIcon from '../../assets/start.jpg';
-import endIcon from '../../assets/end.jpg';
+
 function TripDetails() {
   const navigate = useNavigate();
   const { ownerId, vehicleId, tripId } = useParams();
@@ -101,7 +100,7 @@ function TripDetails() {
             textAlign: 'start',
             fontSize: '18px',
           }}>
-       <img src={startIcon} alt="start address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
+       <img src="/static/media/start.jpg" alt="start address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
        {trip.startingAddress}
     </div>
     <div style={{
@@ -112,7 +111,7 @@ function TripDetails() {
       textAlign: 'start',
       fontSize: '18px',
     }}>
-      <img src={endIcon} alt="end address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
+      <img src="/static/media/end.jpg" alt="end address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
        {trip.endingAddress}
     </div>
     <div style={{
