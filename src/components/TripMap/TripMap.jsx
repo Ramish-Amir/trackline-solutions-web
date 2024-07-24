@@ -22,13 +22,13 @@ const TripMap = ({ encodedString, startingAddress, endingAddress }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [decodedPath, setDecodedPath] = useState();
 
-  const [zoom, setZoom] = useState(14);
+  // const [zoom, setZoom] = useState(14);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setZoom(15);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setZoom(15);
+  //   }, 500);
+  // }, []);
 
   const onLoad = useCallback((map) => {
     mapRef.current = map;
@@ -57,22 +57,27 @@ const TripMap = ({ encodedString, startingAddress, endingAddress }) => {
         path: decodedPath,
         geodesic: true,
         strokeColor: "black",
-        // strokeColor: "#00008B",
         strokeOpacity: 1.0,
-        strokeWeight: 8, // Border width
+        strokeWeight: 8,
       });
 
       const innerPath = new window.google.maps.Polyline({
         path: decodedPath,
         geodesic: true,
         strokeColor: "black",
-        // strokeColor: "blue",
         strokeOpacity: 1.0,
         strokeWeight: 4,
       });
 
       borderPath.setMap(mapRef.current);
       innerPath.setMap(mapRef.current);
+
+      // Create LatLngBounds object to fit the polyline
+      const bounds = new window.google.maps.LatLngBounds();
+      decodedPath.forEach((point) => {
+        bounds.extend(point);
+      });
+      mapRef.current.fitBounds(bounds);
 
       return () => {
         borderPath.setMap(null);
@@ -85,7 +90,7 @@ const TripMap = ({ encodedString, startingAddress, endingAddress }) => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={zoom || 15}
+      zoom={14} // Initial zoom value
       options={mapOptions}
       onLoad={onLoad}
       onUnmount={onUnmount}
