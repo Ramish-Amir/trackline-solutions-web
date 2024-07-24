@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { LoadScript } from "@react-google-maps/api";
 
 <link
   rel="stylesheet"
@@ -13,7 +14,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
   integrity="sha384-pzjw8f+ua7Kw1TIq3mCNmQWf94iRWG2S2YBjG4zl5cJ0TYxPZcF5Qx5RvvD1R2U3"
   crossorigin="anonymous"
 />;
-import { LoadScript } from "@react-google-maps/api";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
