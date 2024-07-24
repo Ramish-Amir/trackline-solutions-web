@@ -112,7 +112,11 @@ const Vehicle = () => {
             ) : (
               vehicles.map((vehicle) => (
                 <Fade key={vehicle.id} in={!loading} timeout={1000}>
-                  <TableRow>
+                  <TableRow
+                    onClick={() =>
+                      navigate(`/vehicles/${vehicle.id}/${vehicle.ownerId}`)
+                    }
+                  >
                     <TableCell>{vehicle.make}</TableCell>
                     <TableCell>{vehicle.company}</TableCell>
                     <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>

@@ -7,6 +7,7 @@ import Signup from "./pages/signup/signup";
 import RegisterUser from "./components/RegisterUser/RegisterUser";
 import RegisterVehicle from "./components/RegisterVehicle/RegisterVehicle";
 import TripDetails from "./pages/tripDetails/tripDetails";
+import EditVehicle from "./pages/editVehicle/editVehicle";
 
 export const routes = [
   {
@@ -37,6 +38,10 @@ export const routes = [
         path: "register",
         element: <RegisterVehicle />,
       },
+      {
+        path: "/vehicles/:vehicleId/:ownerId",
+        element: <EditVehicle />,
+      },
     ],
   },
   {
@@ -47,7 +52,7 @@ export const routes = [
         element: <Trips />,
       },
       {
-        path: "/trips/:id",
+        path: "/trips/:ownerId/:vehicleId/:tripId",
         element: <TripDetails />,
       },
     ],

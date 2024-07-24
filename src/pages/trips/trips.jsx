@@ -13,8 +13,10 @@ import { snackbarBaseOptions } from "../../utils/snackbar";
 import { Fade } from "@mui/material";
 
 import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const Trips = () => {
+  const navigate = useNavigate();
   const [trips, setTrips] = useState([]);
   const [loadingTrips, setLoadingTrips] = useState(false);
 
@@ -36,6 +38,7 @@ const Trips = () => {
     try {
       setLoadingTrips(true);
       const trips = await getAllTrips();
+      console.log(">>> TRIPS >> ", trips);
       setTrips(trips);
     } catch (err) {
       console.log(err);
@@ -72,7 +75,14 @@ const Trips = () => {
             ) : (
               trips.map((trip) => (
                 <Fade key={trip.id} in={!loadingTrips} timeout={1000}>
-                  <TableRow>
+                  <TableRow
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/trips/${trip.ownerId}/${trip.vehicleId}/${trip.id}`
+                      )
+                    }
+                  >
                     <TableCell>{trip.ownerName}</TableCell>
                     <TableCell>{trip.duration}</TableCell>
                     <TableCell>{trip.startingAddress}</TableCell>
