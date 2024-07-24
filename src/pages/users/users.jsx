@@ -94,8 +94,8 @@ export default function Users() {
         >
           <TableHead>
             <TableRow>
-              {columnNames?.map((col) => (
-                <TableCell>{col}</TableCell>
+              {columnNames?.map((col, index) => (
+                <TableCell key={index}>{col}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -104,9 +104,8 @@ export default function Users() {
               <TableLoadingSpinner />
             ) : (
               users?.map((user, index) => (
-                <Fade in={!loading} timeout={1000}>
+                <Fade key={index} in={!loading} timeout={1000}>
                   <TableRow
-                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell>{user.firstName}</TableCell>

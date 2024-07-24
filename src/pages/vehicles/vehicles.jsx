@@ -101,8 +101,8 @@ const Vehicle = () => {
         >
           <TableHead>
             <TableRow>
-              {columnNames?.map((col) => (
-                <TableCell>{col}</TableCell>
+              {columnNames?.map((col, index) => (
+                <TableCell key={index}>{col}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -111,8 +111,8 @@ const Vehicle = () => {
               <TableLoadingSpinner />
             ) : (
               vehicles.map((vehicle) => (
-                <Fade in={!loading} timeout={1000}>
-                  <TableRow key={vehicle.id}>
+                <Fade key={vehicle.id} in={!loading} timeout={1000}>
+                  <TableRow>
                     <TableCell>{vehicle.make}</TableCell>
                     <TableCell>{vehicle.company}</TableCell>
                     <TableCell>{vehicle.vehicleRegistrationNo}</TableCell>

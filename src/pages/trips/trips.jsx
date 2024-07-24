@@ -13,8 +13,10 @@ import { snackbarBaseOptions } from "../../utils/snackbar";
 import { Fade } from "@mui/material";
 
 import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const Trips = () => {
+  const navigate = useNavigate();
   const [trips, setTrips] = useState([]);
   const [loadingTrips, setLoadingTrips] = useState(false);
 
@@ -61,8 +63,8 @@ const Trips = () => {
         >
           <TableHead>
             <TableRow>
-              {columnNames?.map((cell) => (
-                <TableCell>{cell}</TableCell>
+              {columnNames?.map((cell, index) => (
+                <TableCell key={index}>{cell}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -71,18 +73,29 @@ const Trips = () => {
               <TableLoadingSpinner />
             ) : (
               trips.map((trip) => (
-                <Fade in={!loadingTrips} timeout={1000}>
-                  <TableRow key={trip.id}>
+                <Fade key={trip.id} in={!loadingTrips} timeout={1000}>
+                  <TableRow
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/trips/${trip.id}`)}
+                  >
                     <TableCell>{trip.ownerName}</TableCell>
                     <TableCell>{trip.duration}</TableCell>
                     <TableCell>{trip.startingAddress}</TableCell>
+
                     <TableCell>
-                      {new Date(trip.startingTime * 1000).toLocaleString()}
+                      {new Date(
+                        trip.startingTime.seconds * 1000 +
+                          trip.startingTime.seconds / 1000000
+                      ).toLocaleString()}
                     </TableCell>
                     <TableCell>{trip.endingAddress}</TableCell>
                     <TableCell>
-                      {new Date(trip.endingTime * 1000).toLocaleString()}
+                      {new Date(
+                        trip.endingTime.seconds * 1000 +
+                          trip.endingTime.seconds / 1000000
+                      ).toLocaleString()}
                     </TableCell>
+
                     <TableCell>{trip.company}</TableCell>
                   </TableRow>
                 </Fade>
