@@ -73,3 +73,15 @@
   /* .card-bg-trips {
     background-color: #A3A847 !important;
   } */
+
+  .dashboardChartsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    column-gap: 15px;
+    row-gap: 15px;
+  }
+
+  /* .lineChartContainerWrap, .recentTripMap {
+    width: 50%;
+  } */

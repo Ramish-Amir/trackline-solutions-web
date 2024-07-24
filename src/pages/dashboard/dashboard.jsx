@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./dashboard.css";
 import Page from "../../layouts/Page/Page";
 import TripsChart from "../../components/TripsChart/TripsChart";
+import RecentTrip from "../../components/RecentTrip/RecentTrip";
 
 const Dashboard = () => {
   // Define animations for each card
@@ -123,7 +124,14 @@ const Dashboard = () => {
               </Col>
             ))}
           </Row>
-          <TripsChart />
+          <div className="dashboardChartsContainer">
+            <div className="lineChartContainerWrap">
+              <TripsChart />
+            </div>
+            <div className="recentTripMap">
+              <RecentTrip />
+            </div>
+          </div>
         </main>
       </Container>
     </Page>

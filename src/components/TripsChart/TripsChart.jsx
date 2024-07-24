@@ -28,7 +28,7 @@ const data = [
 
 function TripsChart() {
   return (
-    <Col xs={12} className="mb-4">
+    <div className="lineChartContainer">
       <Card className="h-100 shadow-sm border-0 rounded-lg">
         <CardBody>
           <CardTitle tag="h6" className="mb-3">
@@ -55,7 +55,7 @@ function TripsChart() {
           </div>
         </CardBody>
       </Card>
-    </Col>
+    </div>
   );
 }
 
