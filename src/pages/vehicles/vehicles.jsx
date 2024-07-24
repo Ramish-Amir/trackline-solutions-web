@@ -75,7 +75,7 @@ const Vehicle = () => {
   return (
     <Page>
       <div className="pageHeader">
-        <h1>Vehicles</h1>
+        <h1 className="page-title">Vehicles</h1>
         <div className="headerActions">
           <Button
             sx={{

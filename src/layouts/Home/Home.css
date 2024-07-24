@@ -16,4 +16,5 @@
 
 .pagesContainerHome {
     width: calc(80% - 30px);
+    padding: 15px 0;
 }
