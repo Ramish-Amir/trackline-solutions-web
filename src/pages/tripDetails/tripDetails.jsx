@@ -5,8 +5,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { colors } from "../../assets";
 import { getTripDetails } from "../../api/trips";
 import TripMap from "../../components/TripMap/TripMap.jsx";
-import startIcon from '../../assets/start.jpg';
-import endIcon from '../../assets/end.jpg';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import PlaceIcon from '@mui/icons-material/Place';
+import {  Box } from '@mui/material';
+import './tripDetails.css';
 function TripDetails() {
   const navigate = useNavigate();
   const { ownerId, vehicleId, tripId } = useParams();
@@ -84,64 +86,23 @@ function TripDetails() {
         </div>
       </div>
 
-      <div style={{
-          backgroundColor: '#DDDDDD',
-          color: '#004040',
-          borderRadius: '15px',
-          padding: '20px',
-          margin: '15px',
-          width: '60%',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
-        }}>
-          <div style={{
-            marginBottom: '15px',
-            padding: '10px',
-            backgroundColor:'#DDDDDD',
-            borderRadius: '10px',
-            textAlign: 'start',
-            fontSize: '18px',
-          }}>
-       <img src={startIcon} alt="start address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
-       {trip.startingAddress}
-    </div>
-    <div style={{
-      marginBottom: '15px',
-      padding: '10px',
-      backgroundColor:'#DDDDDD',
-      borderRadius: '10px',
-      textAlign: 'start',
-      fontSize: '18px',
-    }}>
-      <img src={endIcon} alt="end address" style={{ width: '24px', height: '24px', marginRight: '10px' }} ></img>
-       {trip.endingAddress}
-    </div>
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: '#003030',
-      borderRadius: '10px',
-      padding: '10px',
-    }}>
-      <div style={{
-        flex: 1,
-        color:'#DDDDDD',
-        textAlign: 'center',
-        borderRight: '1px solid #DDDDDD',
-        paddingRight: '10px',
-      }}>
+      <div className="tripDetailsCard">
+          
+          <div className="tripDetailsContent">
+            <div className="item-icon">{<MyLocationIcon />} <span> {trip.startingAddress}</span></div>      
+          </div>
+          <div  className="tripDetailsContent">
+            <div className="item-icon">{<PlaceIcon/>} <span>  {trip.endingAddress}</span></div>   
+          </div>
+      </div>
+    <div className="tripDetailsDistanceTime">
+      <div className="tripDistance">
         Distance: {trip.distance.toFixed(2)} km
       </div>
-      <div style={{
-        flex: 1,
-        color:'#DDDDDD',
-        textAlign: 'center',
-        paddingLeft: '10px',
-      }}>
+      <div className="tripTime">
         Time Taken: {formatTimeDifference(trip.startingTime, trip.endingTime)}
       </div>
     </div>
-  </div>
       {/* <p>You can view your trip details once this feature is ready...</p> */}
 
       <h3>Trip Map</h3>

@@ -1,0 +1,47 @@
+.item-icon {
+    margin-right: 10px;
+}
+.tripDetailsCard{
+  background-color: #DDDDDD;
+  color: #004040;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px;
+  width: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);     
+}
+
+.tripDetailsContent
+ {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #DDDDDD;
+    border-radius: 10px;
+    text-align: start;
+    font-size: 18px;
+ }
+
+.tripDetailsDistanceTime
+ {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003030;
+    border-radius: 10px;
+    padding:10px;
+ }
+ .tripDistance
+ {
+    flex: 1;
+    color:#DDDDDD;
+    text-align:center;
+    border-right:1px solid #DDDDDD;
+    padding-right:10px;
+ }
+ .tripTime
+ {
+   flex: 1;
+   color: #DDDDDD;
+   text-align: center;
+   padding-left: 10px;   
+ }

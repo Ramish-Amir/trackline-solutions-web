@@ -109,3 +109,66 @@ export const getTripDetails = async (ownerId, vehicleId, tripId) => {
     throw error;
   }
 };
+
+
+
+export const getPerTripDetails = async (ownerId, vehicleId, tripId) => {
+  try {
+    console.log("GET DETAILS >> ", ownerId, vehicleId, tripId);
+    // Reference the trip document
+    const tripDocRef = doc(
+      db,
+      DB_COLLECTIONS.USERS,
+      ownerId,
+      DB_COLLECTIONS.VEHICLES,
+      vehicleId,
+      DB_COLLECTIONS.TRIPS,
+      tripId
+    );
+
+    // Fetch the trip document
+    const tripDocSnapshot = await getDoc(tripDocRef);
+    if (!tripDocSnapshot.exists()) {
+      throw new Error("Trip not found");
+    }
+    const tripData = tripDocSnapshot.data();
+
+    // Fetch user information
+    const userDocRef = doc(db, DB_COLLECTIONS.USERS, ownerId);
+    const userDocSnapshot = await getDoc(userDocRef);
+    if (!userDocSnapshot.exists()) {
+      throw new Error("User not found");
+    }
+    const { firstName, lastName } = userDocSnapshot.data();
+
+    // Fetch vehicle information
+    const vehicleDocRef = doc(
+      db,
+      DB_COLLECTIONS.USERS,
+      ownerId,
+      DB_COLLECTIONS.VEHICLES,
+      vehicleId
+    );
+    const vehicleDocSnapshot = await getDoc(vehicleDocRef);
+    if (!vehicleDocSnapshot.exists()) {
+      throw new Error("Vehicle not found");
+    }
+    const { company } = vehicleDocSnapshot.data();
+
+    // Combine the data
+    const tripDetails = {
+      id: tripId,
+      ownerId,
+      ownerName: `${firstName} ${lastName}`,
+      vehicleId,
+      company,
+      ...tripData,
+    };
+
+    return tripDetails;
+  } catch (error) {
+    console.error("Error getting trip details:", error);
+    throw error;
+  }
+};
+
