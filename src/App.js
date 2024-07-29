@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./layouts/Home/Home";
 import { SnackbarProvider } from "notistack";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const auth = useContext(AuthContext);

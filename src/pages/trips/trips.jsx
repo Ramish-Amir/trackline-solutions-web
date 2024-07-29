@@ -54,7 +54,7 @@ const Trips = () => {
   return (
     <Page>
       <div className="pageHeader">
-        <h1>Trips</h1>
+        <h1 className="page-title">Trips</h1>
         <div className="headerActions"></div>
       </div>
       <TableContainer>

@@ -67,7 +67,7 @@ export default function Users() {
   return (
     <Page>
       <div className="pageHeader">
-        <h1>Users</h1>
+        <h1 className="page-title">Users</h1>
         <div className="headerActions">
           <Button
             sx={{
