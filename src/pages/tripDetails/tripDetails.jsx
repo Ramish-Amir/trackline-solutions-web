@@ -88,12 +88,13 @@ function TripDetails() {
 
       <div className="tripDetailsCard">
           
-          <div className="tripDetailsContent">
+          {/* <div className="tripDetailsContent"> */}
             <div className="item-icon">{<MyLocationIcon />} <span> {trip.startingAddress}</span></div>      
-          </div>
-          <div  className="tripDetailsContent">
+          {/* </div> */}
+          <div className="vertical-dash-line"></div>
+          {/* <div  className="tripDetailsContent"> */}
             <div className="item-icon">{<PlaceIcon/>} <span>  {trip.endingAddress}</span></div>   
-          </div>
+          {/* </div> */}
       </div>
     <div className="tripDetailsDistanceTime">
       <div className="tripDistance">

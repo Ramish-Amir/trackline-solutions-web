@@ -1,5 +1,7 @@
 .item-icon {
     margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .tripDetailsCard{
   background-color: #DDDDDD;
@@ -45,3 +47,9 @@
    text-align: center;
    padding-left: 10px;   
  }
+
+ .vertical-dash-line {
+   border-left: 3px dashed #003030;
+   height: 50px; /* Adjust to match the height of your icons */
+   margin: 0 10px; /* Space around the vertical line */
+}
