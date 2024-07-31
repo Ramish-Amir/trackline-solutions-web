@@ -95,15 +95,16 @@ function TripDetails() {
           {/* <div  className="tripDetailsContent"> */}
             <div className="item-icon">{<PlaceIcon/>} <span>  {trip.endingAddress}</span></div>   
           {/* </div> */}
+        <div className="tripDetailsDistanceTime">
+        <div className="tripDistance">
+          Distance: {trip.distance.toFixed(2)} km
+        </div>
+        <div className="tripTime">
+          Time Taken: {formatTimeDifference(trip.startingTime, trip.endingTime)}
+        </div>
+        </div>
       </div>
-    <div className="tripDetailsDistanceTime">
-      <div className="tripDistance">
-        Distance: {trip.distance.toFixed(2)} km
-      </div>
-      <div className="tripTime">
-        Time Taken: {formatTimeDifference(trip.startingTime, trip.endingTime)}
-      </div>
-    </div>
+    
       {/* <p>You can view your trip details once this feature is ready...</p> */}
 
       <h3>Trip Map</h3>

@@ -1,4 +1,5 @@
 import React from "react";
+import  { useState, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -14,32 +15,83 @@ import "./dashboard.css";
 import Page from "../../layouts/Page/Page";
 import TripsChart from "../../components/TripsChart/TripsChart";
 import RecentTrip from "../../components/RecentTrip/RecentTrip";
+import {getAllTrips} from "../../api/trips";
+import {getAllVehicles} from "../../api/vehicle";
+import {getAllUsers} from "../../api/users"
+import { setLogLevel } from "firebase/app";
+
 
 const Dashboard = () => {
   // Define animations for each card
+const [totalTrips,setTotalTrips]=useState(0);
+const [loading,setLoading]=useState(true);
+const [totalVehicles,setTotalVehicles]=useState(0);
+const [totalUsers,setTotalUsers]=useState(0);
+const [totalDistance,setTotalDistance]=useState(0);
+const [users,setUser]=useState(null);
+
+useEffect(() => 
+   {
+    fetchDetails();
+   }, []);
+
+const fetchDetails= async ()=>
+  {
+      try
+       {
+         setLoading(true);
+         const trips = await getAllTrips();
+         const vehicles = await getAllVehicles();
+         const users=await getAllUsers();
+         setTotalTrips(trips.length);
+         setTotalVehicles(vehicles.length);
+         setTotalUsers(users.length);
+         setUser(users);
+         let totalDistance=0;
+         for(const trip of trips)
+           {
+             totalDistance+=trip.distance
+           }
+         setTotalDistance(totalDistance);  
+       }
+      catch(error)
+       {
+         console.log(error);
+       } 
+      finally
+       {
+         setLoading(false);
+       }
+
+  };  
+  console.log("number of trips ",totalTrips);
+  console.log("number of Vehicles",totalVehicles);
+  console.log("number of Users ",totalUsers);
+  
   const [tripsAnimation] = useSpring(() => ({
-    number: 1200,
+    number: totalTrips,
     from: { number: 0 },
     config: { duration: 2000 },
-  }));
+  }),[totalTrips]);
 
   const [vehicleAnimation] = useSpring(() => ({
-    number: 4,
+    number: totalVehicles,
     from: { number: 0 },
     config: { duration: 2000 },
-  }));
+  }),[totalVehicles]);
 
   const [usersAnimation] = useSpring(() => ({
-    number: 6,
+    number: totalUsers,
     from: { number: 0 },
     config: { duration: 2000 },
-  }));
+  }),[totalUsers]);
 
   const [milesAnimation] = useSpring(() => ({
-    number: 103430,
+    number: totalDistance,
     from: { number: 0 },
     config: { duration: 2000 },
-  }));
+  }),[totalDistance]);
+
 
   return (
     <Page>
@@ -57,18 +109,19 @@ const Dashboard = () => {
           <Row>
             {[
               {
-                title: "Total trips",
-                value: "1200",
-                change: "+278 in last month",
-                icon: "Trips",
-                color: "primary",
-                animation: tripsAnimation,
-                format: (n) =>
-                  `${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                  title: "Total trips",       
+                  value: tripsAnimation.number,
+                  change: "+278 in last month",
+                  icon: "Trips",
+                  color: "primary",
+                  animation: tripsAnimation,
+                  format: (n) =>
+                    `${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                 
               },
               {
                 title: "Total Vehicle",
-                value: "20",
+                value: vehicleAnimation.number,
                 change: "+3 in last month",
                 icon: "Vehicles",
                 color: "success",
@@ -78,16 +131,16 @@ const Dashboard = () => {
               },
               {
                 title: "Users",
-                value: "12",
+                value: usersAnimation.number,
                 change: "+2 in last month",
                 icon: "Users",
                 color: "warning",
                 animation: usersAnimation,
-                format: (n) => `${n.toFixed(1)}`,
+                format: (n) => `${n.toFixed(0)}`,
               },
               {
                 title: "Total miles",
-                value: "103,430",
+                value: milesAnimation.number,
                 change: "+2500 in last month",
                 icon: "Distance",
                 color: "danger",
