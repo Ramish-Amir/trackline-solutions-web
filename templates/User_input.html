@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Mileage Prediction Input</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2c2c2c;
+            color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #f8f9fa;
+        }
+        .form-control, .btn {
+            margin-top: 15px;
+        }
+        .btn {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Enter Details for Fuel Mileage Prediction</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="distance">Distance (km):</label>
+                <input type="number" class="form-control" id="distance" name="distance" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="fuel_used">Fuel Used (liters):</label>
+                <input type="number" class="form-control" id="fuel_used" name="fuel_used" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="product">Gas Type:</label>
+                <select class="form-control" id="product" name="product" required>
+                    <option value="CNG">CNG</option>
+                    <option value="DIESEL">Diesel</option>
+                    <option value="GASOIL">Gasoil</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="car">Car Brand:</label>
+                <select class="form-control" id="car" name="car" required>
+                    <option value="CADDY">Caddy</option>
+                    <option value="DAF">DAF</option>
+                    <option value="FORD">Ford</option>
+                    <option value="IVECO">Iveco</option>
+                    <option value="LANDROVER">Land Rover</option>
+                    <option value="MERCEDES">Mercedes</option>
+                    <option value="MITSUBISHI">Mitsubishi</option>
+                    <option value="NISSAN">Nissan</option>
+                    <option value="PEUGEOT">Peugeot</option>
+                    <option value="RENAULT">Renault</option>
+                    <option value="VAUXHALL">Vauxhall</option>
+                    <option value="VOLKSWAGEN">Volkswagen</option>
+                    <option value="VOLVO">Volvo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-block">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
