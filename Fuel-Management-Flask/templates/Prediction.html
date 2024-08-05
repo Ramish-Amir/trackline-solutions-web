@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Mileage Prediction Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2c2c2c;
+            color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #f8f9fa;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #28a745;
+        }
+        .btn {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Fuel Mileage Prediction Result</h1>
+        <div class="card">
+            <div class="card-body">
+                {% if result %}
+                    <div id="result" class="text-center mt-4">
+                        <p>Actual Mileage: {{ result.actual_mileage }} km/l</p>
+                        <p>Predicted Mileage Range: {{ result.predicted_mileage_lower_bound }} to {{ result.predicted_mileage_upper_bound }} km/l</p>
+                        <p>Theft Status: {{ result.theft_status }}</p>
+                    </div>
+                {% else %}
+                    <div id="result" class="text-center mt-4">
+                        Error: Could not calculate the prediction.
+                    </div>
+                {% endif %}
+            </div>
+            <a href="/" class="btn btn-block mt-4">Predict Again</a>
+        </div>
+    </div>
+</body>
+</html>
