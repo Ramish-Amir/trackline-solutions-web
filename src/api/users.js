@@ -15,3 +15,9 @@ export const getAllUsers = async () => {
 export const deleteUserWithId = async (userId) => {
   await deleteDoc(doc(db, DB_COLLECTIONS.USERS, userId));
 };
+
+export const getUsersCount = async () => {
+  const collectionGrp = collection(db, DB_COLLECTIONS.USERS);
+  const snapshot = await getDocs(collectionGrp);
+  return snapshot.docs.length;
+};

@@ -1,6 +1,27 @@
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  collectionGroup,
+} from "firebase/firestore";
 import { DB_COLLECTIONS } from "./auth";
 import { db } from "../firebase"; // Assuming db is exported from firebase.js or similar
+
+const MONTHS = [
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+];
 
 export const getAllTrips = async () => {
   const trips = [];
@@ -110,8 +131,6 @@ export const getTripDetails = async (ownerId, vehicleId, tripId) => {
   }
 };
 
-
-
 export const getPerTripDetails = async (ownerId, vehicleId, tripId) => {
   try {
     console.log("GET DETAILS >> ", ownerId, vehicleId, tripId);
@@ -172,3 +191,55 @@ export const getPerTripDetails = async (ownerId, vehicleId, tripId) => {
   }
 };
 
+export const tripsChartData = async () => {
+  const tripsCollectionGroup = collectionGroup(db, DB_COLLECTIONS.TRIPS);
+  const tripsSnapshot = await getDocs(tripsCollectionGroup);
+
+  const trips = tripsSnapshot?.docs?.map((tripDoc) => tripDoc.data());
+
+  // Sort trips by endingTime in descending order
+  trips.sort((a, b) => b.endingTime.seconds - a.endingTime.seconds);
+
+  // Initialize an empty object to store the count of trips for each month
+  const tripsByMonth = {};
+
+  // Iterate over the trips array
+  trips.forEach((trip) => {
+    const date = new Date(trip.endingTime.seconds * 1000); // convert to JavaScript Date object
+    const month = date.toLocaleString(undefined, {
+      month: "short",
+      timeZone: "America/Toronto",
+    }); // get month in local time
+    const year = date.toLocaleString(undefined, {
+      year: "numeric",
+      timeZone: "America/Toronto",
+    }); // get year in local time
+
+    // Use the month and year as a key in the object and increment the count
+    const key = `${month} ${year}`;
+    tripsByMonth[key] = (tripsByMonth[key] || 0) + 1;
+  });
+
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  // Create the past12MonthsData array with all 12 months
+  const past12MonthsData = MONTHS.map((month) => {
+    const year = 2024;
+    // currentDate.getMonth() >= MONTHS.indexOf(month)
+    //   ? currentYear
+    //   : currentYear - 1;
+    const key = `${month} ${year}`;
+    return { name: month, Trips: tripsByMonth[key] || 0 };
+  });
+
+  console.log("PAST 12 >> ", past12MonthsData);
+
+  return past12MonthsData;
+};
+
+export const getTripsCount = async () => {
+  const collectionGrp = collectionGroup(db, DB_COLLECTIONS.TRIPS);
+  const snapshot = await getDocs(collectionGrp);
+  return snapshot.docs.length;
+};

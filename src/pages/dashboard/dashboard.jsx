@@ -15,9 +15,9 @@ import "./dashboard.css";
 import Page from "../../layouts/Page/Page";
 import TripsChart from "../../components/TripsChart/TripsChart";
 import RecentTrip from "../../components/RecentTrip/RecentTrip";
-import {getAllTrips} from "../../api/trips";
-import {getAllVehicles} from "../../api/vehicle";
-import {getAllUsers} from "../../api/users"
+import {getAllTrips, getTripsCount} from "../../api/trips";
+import {getAllVehicles, getVehiclesCount} from "../../api/vehicle";
+import {getAllUsers, getUsersCount} from "../../api/users"
 import { setLogLevel } from "firebase/app";
 
 
@@ -39,16 +39,17 @@ const fetchDetails= async ()=>
   {
       try
        {
-         setLoading(true);
-         const trips = await getAllTrips();
-         const vehicles = await getAllVehicles();
-         const users=await getAllUsers();
-         setTotalTrips(trips.length);
-         setTotalVehicles(vehicles.length);
-         setTotalUsers(users.length);
-         setUser(users);
-         let totalDistance=0;
-         for(const trip of trips)
+        setLoading(true);
+        const trips = await getTripsCount();
+        const vehicles = await getVehiclesCount();
+        const users = await getUsersCount();
+        setTotalTrips(trips);
+        setTotalVehicles(vehicles);
+        setTotalUsers(users);
+        setUser(users);
+        const tripDocs = await getAllTrips();
+        let totalDistance = 0;
+         for(const trip of tripDocs)
            {
              totalDistance+=trip.distance
            }

@@ -165,3 +165,9 @@ export const getAllUsers = async () => {
     throw new Error("Failed to fetch users.");
   }
 };
+
+export const getVehiclesCount = async () => {
+  const collectionGrp = collectionGroup(db, DB_COLLECTIONS.VEHICLES);
+  const snapshot = await getDocs(collectionGrp);
+  return snapshot.docs.length;
+};
