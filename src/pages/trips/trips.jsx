@@ -14,6 +14,7 @@ import { Fade } from "@mui/material";
 
 import TableLoadingSpinner from "../../components/TableLoadingSpinner/TableLoadingSpinner";
 import { useNavigate } from "react-router-dom";
+import { getFormattedTime } from "../../utils/timeConversions";
 
 const Trips = () => {
   const navigate = useNavigate();
@@ -86,19 +87,9 @@ const Trips = () => {
                     <TableCell>{trip.duration}</TableCell>
                     <TableCell>{trip.startingAddress}</TableCell>
 
-                    <TableCell>
-                      {new Date(
-                        trip.startingTime.seconds * 1000 +
-                          trip.startingTime.seconds / 1000000
-                      ).toLocaleString()}
-                    </TableCell>
+                    <TableCell>{getFormattedTime(trip.startingTime)}</TableCell>
                     <TableCell>{trip.endingAddress}</TableCell>
-                    <TableCell>
-                      {new Date(
-                        trip.endingTime.seconds * 1000 +
-                          trip.endingTime.seconds / 1000000
-                      ).toLocaleString()}
-                    </TableCell>
+                    <TableCell>{getFormattedTime(trip.endingTime)}</TableCell>
 
                     <TableCell>{trip.company}</TableCell>
                   </TableRow>

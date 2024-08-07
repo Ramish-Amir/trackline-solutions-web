@@ -2,6 +2,8 @@ import logo from "./logo.svg";
 import logo1 from "./logo1.svg";
 import tripOriginIcon from "./tripOriginIcon.svg";
 import tripEndIcon from "./tripEndIcon.svg";
+import profilePicture from "./profile_pic.jpeg";
+import carProfilePciture from "./carProfilePicture.jpeg";
 
 export const colors = {
   primary: "#004040",
@@ -15,4 +17,6 @@ export const assets = {
   logo1,
   tripEndIcon,
   tripOriginIcon,
+  profilePicture,
+  carProfilePciture,
 };

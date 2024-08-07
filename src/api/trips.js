@@ -100,7 +100,7 @@ export const getTripDetails = async (ownerId, vehicleId, tripId) => {
     if (!userDocSnapshot.exists()) {
       throw new Error("User not found");
     }
-    const { firstName, lastName } = userDocSnapshot.data();
+    const { firstName, lastName, email } = userDocSnapshot.data();
 
     // Fetch vehicle information
     const vehicleDocRef = doc(
@@ -121,7 +121,9 @@ export const getTripDetails = async (ownerId, vehicleId, tripId) => {
       id: tripId,
       ownerId,
       ownerName: `${firstName} ${lastName}`,
+      owner: userDocSnapshot.data(),
       vehicleId,
+      vehicle: vehicleDocSnapshot.data(),
       company,
       ...tripData,
     };

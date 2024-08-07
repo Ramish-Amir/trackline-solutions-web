@@ -1,16 +1,34 @@
 .item-icon {
+   display: flex;
+   align-items: center;
+   column-gap: 6px;
     margin-right: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.tripDetailContainer {
+   display: flex;
+   justify-content: space-between;
+   align-items: stretch;
+   column-gap: 15px;
+   margin-bottom: 20px;
+}
+
 .tripDetailsCard{
   background-color: white;
   color: #004040;
   border-radius: 15px;
   padding: 20px;
-  margin: 15px;
-  width: 60%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);     
+  width: 50%;
+/* height: fit-content; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);   
+}
+
+.tripCardTime {
+   color: gray;
+   font-size: 12px;
+   font-style: italic;
 }
 
 .tripDetailsContent
@@ -53,4 +71,24 @@
    border-left: 3px dashed #003030;
    height: 50px; /* Adjust to match the height of your icons */
    margin: 0 10px; /* Space around the vertical line */
+}
+
+.tripMetaRow {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   margin-bottom: 4px;
+   
+}
+
+
+.metaTitle {
+   color: rgb(92, 90, 90);
+}
+
+.tripDetailImage {
+   width: 95px;
+   height: 95px;
+   border-radius: 12px;
+   object-fit: cover;
 }
