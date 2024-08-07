@@ -73,13 +73,6 @@ export const deleteVehicle = async (ownerId, vehicleId) => {
 
 export const editVehicle = async (ownerId, vehicleId, newData) => {
   try {
-    console.log(
-      "Editing vehicle with ownerId:",
-      ownerId,
-      "and vehicleId:",
-      vehicleId
-    );
-
     const vehicleDocRef = doc(
       db,
       DB_COLLECTIONS.USERS,
@@ -90,7 +83,6 @@ export const editVehicle = async (ownerId, vehicleId, newData) => {
 
     await updateDoc(vehicleDocRef, newData);
 
-    console.log("Vehicle updated successfully:", vehicleId);
   } catch (error) {
     console.error("Failed to update vehicle:", error);
     throw new Error("Failed to update vehicle.");

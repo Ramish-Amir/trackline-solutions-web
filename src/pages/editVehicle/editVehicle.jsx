@@ -49,7 +49,6 @@ function EditVehicle() {
       try {
         // Assuming you have a function to fetch a single vehicle by id
         const vehicle = await fetchVehicleById(ownerId, vehicleId); // Implement this function to fetch vehicle details
-        console.log(vehicle);
         if (vehicle) {
           setVehiclesData({
             company: vehicle.company,
@@ -118,8 +117,8 @@ function EditVehicle() {
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
-    for (let year = currentYear; year >= 1900; year--) {
-      years.push(year.toString());
+    for (let year = currentYear; year > 1990; year--) {
+      years.push(year);
     }
     return years;
   };

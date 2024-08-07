@@ -21,7 +21,6 @@ function TripDetails() {
        {
          setLoading(true);
          const tripDetails = await getTripDetails(ownerId, vehicleId, tripId);
-         console.log("  >>> ", tripDetails);
          setTrip(tripDetails);
        } 
       catch (err)

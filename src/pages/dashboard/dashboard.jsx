@@ -65,9 +65,6 @@ const fetchDetails= async ()=>
        }
 
   };  
-  console.log("number of trips ",totalTrips);
-  console.log("number of Vehicles",totalVehicles);
-  console.log("number of Users ",totalUsers);
   
   const [tripsAnimation] = useSpring(() => ({
     number: totalTrips,

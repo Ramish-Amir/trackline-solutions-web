@@ -73,7 +73,6 @@ export const getAllTrips = async () => {
 
 export const getTripDetails = async (ownerId, vehicleId, tripId) => {
   try {
-    console.log("GET DETAILS >> ", ownerId, vehicleId, tripId);
     // Reference the trip document
     const tripDocRef = doc(
       db,
@@ -133,7 +132,6 @@ export const getTripDetails = async (ownerId, vehicleId, tripId) => {
 
 export const getPerTripDetails = async (ownerId, vehicleId, tripId) => {
   try {
-    console.log("GET DETAILS >> ", ownerId, vehicleId, tripId);
     // Reference the trip document
     const tripDocRef = doc(
       db,
@@ -232,8 +230,6 @@ export const tripsChartData = async () => {
     const key = `${month} ${year}`;
     return { name: month, Trips: tripsByMonth[key] || 0 };
   });
-
-  console.log("PAST 12 >> ", past12MonthsData);
 
   return past12MonthsData;
 };

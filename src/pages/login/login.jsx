@@ -52,13 +52,13 @@ function Login() {
     setAuthError(null);
     if (validate()) {
       try {
-        console.log("Login data:", loginData);
-        const res = await login(loginData.email, loginData.password);
-        console.log("LOGIN RESPONSE >> ", res);
+        await login(loginData.email, loginData.password);
         navigate("/");
       } catch (err) {
-        console.log("LOGIN ERROR >> ", err);
-        setAuthError("Invalid credentials");
+        enqueueSnackbar("Invalid credentials", {
+          variant: "error",
+          ...snackbarBaseOptions,
+        });
       }
     } else {
       enqueueSnackbar("Both email and password are required to proceed", {

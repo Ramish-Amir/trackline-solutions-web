@@ -38,7 +38,6 @@ const Trips = () => {
     try {
       setLoadingTrips(true);
       const trips = await getAllTrips();
-      console.log(">>> TRIPS >> ", trips);
       setTrips(trips);
     } catch (err) {
       console.log(err);

@@ -62,7 +62,6 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log('Form data:', signupData);
       // Here you can add your form submission logic
     }
   };

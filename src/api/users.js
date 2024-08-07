@@ -7,7 +7,6 @@ export const getAllUsers = async () => {
     const querySnapshot = await getDocs(collection(db, DB_COLLECTIONS.USERS));
     return querySnapshot.docs?.map((doc) => ({ id: doc?.id, ...doc?.data() }));
   } catch (err) {
-    console.log(err);
     return err;
   }
 };
