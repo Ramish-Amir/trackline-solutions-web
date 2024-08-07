@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Card, CardBody, CardTitle, CardText } from "reactstrap";
 import { ResponsiveContainer } from "recharts";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { getTripDetails } from "../../api/trips";
+import { getRecentTrip, getTripDetails } from "../../api/trips";
 import TripMap from "../TripMap/TripMap.jsx";
 
 function RecentTrip() {
@@ -10,10 +10,11 @@ function RecentTrip() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchTripDetails = async (ownerId, vehicleId, tripId) => {
+    const fetchRecentTrip = async () => {
       try {
         setLoading(true);
-        const tripDetails = await getTripDetails(ownerId, vehicleId, tripId);
+        await getRecentTrip();
+        const tripDetails = await await getRecentTrip();
         setTrip(tripDetails);
       } catch (err) {
         console.log(err);
@@ -22,11 +23,7 @@ function RecentTrip() {
         setLoading(false);
       }
     };
-    fetchTripDetails(
-      "pTPH2gI95MWmL2QCzuQEH7FGRfA2",
-      "Timestamp(seconds=1717013622, nanoseconds=343575000)",
-      "Timestamp(seconds=1717017413, nanoseconds=289399000)"
-    );
+    fetchRecentTrip();
   }, []);
   return (
     <Col xs={12} className="mb-4">

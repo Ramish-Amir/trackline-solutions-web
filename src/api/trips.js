@@ -4,6 +4,9 @@ import {
   doc,
   getDoc,
   collectionGroup,
+  orderBy,
+  limit,
+  query,
 } from "firebase/firestore";
 import { DB_COLLECTIONS } from "./auth";
 import { db } from "../firebase"; // Assuming db is exported from firebase.js or similar
@@ -238,4 +241,14 @@ export const getTripsCount = async () => {
   const collectionGrp = collectionGroup(db, DB_COLLECTIONS.TRIPS);
   const snapshot = await getDocs(collectionGrp);
   return snapshot.docs.length;
+};
+
+export const getRecentTrip = async () => {
+  const collectionGrp = collectionGroup(db, DB_COLLECTIONS.TRIPS);
+  const snapshot = await getDocs(collectionGrp);
+
+  const latestTrip = snapshot.docs.reduce((prev, current) => {
+    return prev.data().endingTime > current.data().endingTime ? prev : current;
+  });
+  return latestTrip?.data();
 };

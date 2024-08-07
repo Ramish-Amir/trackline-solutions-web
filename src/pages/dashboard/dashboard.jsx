@@ -137,7 +137,7 @@ const Dashboard = () => {
                 format: (n) => `${n.toFixed(0)}`,
               },
               {
-                title: "Total miles",
+                title: "Total kms",
                 value: milesAnimation.number,
                 change: `+${totalDistance} this year`,
                 icon: "Distance",
