@@ -1,5 +1,5 @@
 export const getFormattedTime = (time) => {
-  const date = new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
+  const date = new Date(time?.seconds * 1000 + time?.nanoseconds / 1000000);
 
   const formattedDate = `${date.toLocaleDateString("en-US", {
     month: "short",

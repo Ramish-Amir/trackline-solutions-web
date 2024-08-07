@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Page from "../../layouts/Page/Page";
-import { Button } from "@mui/material";
+import { Button, CircularProgress, Fade } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { assets, colors } from "../../assets";
 import { getTripDetails } from "../../api/trips";
@@ -33,7 +33,7 @@ function TripDetails() {
     fetchTripDetails(ownerId, vehicleId, tripId);
   }, []);
   const timestampToMilliseconds = (timestamp) => {
-    return timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000;
+    return timestamp?.seconds * 1000 + timestamp?.nanoseconds / 1000000;
   };
 
   // Function to format the time difference
@@ -54,9 +54,6 @@ function TripDetails() {
 
     return timeParts.join(" ");
   };
-  if (!trip) {
-    return <p>Trip details are not available</p>;
-  }
 
   return (
     <Page>
@@ -81,80 +78,91 @@ function TripDetails() {
         </div>
       </div>
 
-      <div className="tripDetailContainer">
-        <div className="tripDetailsCard">
-          <div className="item-icon">
-            <MyLocationIcon />
-            <span>
-              {" "}
-              {trip.startingAddress}
-              <div className="tripCardTime">
-                {getFormattedTime(trip.startingTime)}
-              </div>
-            </span>
-          </div>
-          <div className="vertical-dash-line"></div>
-          <div className="item-icon">
-            <PlaceIcon />
-            <div>
-              {trip.endingAddress}
-              <div className="tripCardTime">
-                {getFormattedTime(trip.endingTime)}
-              </div>
-            </div>
-          </div>
-          <div className="tripDetailsDistanceTime">
-            <div className="tripDistance">
-              Distance: {trip.distance.toFixed(2)} km
-            </div>
-            <div className="tripTime">
-              Time Taken:{" "}
-              {formatTimeDifference(trip.startingTime, trip.endingTime)}
-            </div>
-          </div>
+      {loading ? (
+        <div className="spinnerContainer">
+          <CircularProgress
+            sx={{
+              margin: "20px auto",
+              color: colors.primary,
+            }}
+          />
         </div>
-        <div className="tripDetailsCard">
-          <div className="tripMetaRow">
-            <div>
-              <div className="metaTitle">Vehicle Details:</div>
-              <span>
-                {trip.vehicle.make} {trip.vehicle.company}
-              </span>
-              <div className="tripCardTime">
-                {trip.vehicle.yearOfManufacture} -{" "}
-                {trip.vehicle.vehicleRegistrationNo}
+      ) : (
+        <>
+          <div className="tripDetailContainer">
+            <div className="tripDetailsCard">
+              <div className="item-icon">
+                <MyLocationIcon />
+                <span>
+                  {" "}
+                  {trip?.startingAddress}
+                  <div className="tripCardTime">
+                    {getFormattedTime(trip?.startingTime)}
+                  </div>
+                </span>
+              </div>
+              <div className="vertical-dash-line"></div>
+              <div className="item-icon">
+                <PlaceIcon />
+                <div>
+                  {trip?.endingAddress}
+                  <div className="tripCardTime">
+                    {getFormattedTime(trip?.endingTime)}
+                  </div>
+                </div>
+              </div>
+              <div className="tripDetailsDistanceTime">
+                <div className="tripDistance">
+                  Distance: {trip?.distance?.toFixed(2)} km
+                </div>
+                <div className="tripTime">
+                  Time Taken:{" "}
+                  {formatTimeDifference(trip?.startingTime, trip?.endingTime)}
+                </div>
               </div>
             </div>
-            <img
-              className="tripDetailImage"
-              src={assets.carProfilePciture}
-              alt={trip.ownerName}
-            />
-          </div>
-          <div className="tripMetaRow">
-            <div>
-              <div className="metaTitle">Owner Details:</div>
-              <span>{trip.ownerName}</span>
-              <div className="tripCardTime">{trip.owner.email}</div>
+            <div className="tripDetailsCard">
+              <div className="tripMetaRow">
+                <div>
+                  <div className="metaTitle">Vehicle Details:</div>
+                  <span>
+                    {trip?.vehicle.make} {trip?.vehicle.company}
+                  </span>
+                  <div className="tripCardTime">
+                    {trip?.vehicle?.yearOfManufacture} -{" "}
+                    {trip?.vehicle?.vehicleRegistrationNo}
+                  </div>
+                </div>
+                <img
+                  className="tripDetailImage"
+                  src={assets.carProfilePciture}
+                  alt={trip?.ownerName}
+                />
+              </div>
+              <div className="tripMetaRow">
+                <div>
+                  <div className="metaTitle">Owner Details:</div>
+                  <span>{trip?.ownerName}</span>
+                  <div className="tripCardTime">{trip?.owner.email}</div>
+                </div>
+                <img
+                  className="tripDetailImage"
+                  src={assets.profilePicture}
+                  alt={trip?.ownerName}
+                />
+              </div>
             </div>
-            <img
-              className="tripDetailImage"
-              src={assets.profilePicture}
-              alt={trip.ownerName}
-            />
           </div>
-        </div>
-      </div>
 
-      {/* <p>You can view your trip details once this feature is ready...</p> */}
-
-      <h3>Trip Map</h3>
-      {trip && (
-        <TripMap
-          encodedString={trip?.encodedPoints}
-          startingAddress={trip.startingAddress}
-          endingAddress={trip.endingAddress}
-        />
+          <h3>Trip Map</h3>
+          {!loading && trip && (
+            <TripMap
+              encodedString={trip?.encodedPoints}
+              startingAddress={trip?.startingAddress}
+              endingAddress={trip?.endingAddress}
+            />
+          )}
+        </>
       )}
     </Page>
   );
