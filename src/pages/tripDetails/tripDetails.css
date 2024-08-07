@@ -54,3 +54,11 @@
    height: 50px; /* Adjust to match the height of your icons */
    margin: 0 10px; /* Space around the vertical line */
 }
+
+.date
+ {
+   font-size: 15px;
+   padding-bottom: 8px;
+   padding-left: 7px;
+   color:#003030
+ }

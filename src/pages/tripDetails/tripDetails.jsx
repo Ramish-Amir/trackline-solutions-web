@@ -41,6 +41,39 @@ function TripDetails() {
   };
   
   // Function to format the time difference
+
+  function formatTimestamp(seconds, nanoseconds) {
+    // Convert seconds and nanoseconds to milliseconds
+    const milliseconds = seconds * 1000 + Math.floor(nanoseconds / 1000000);
+    
+    // Create a Date object
+    const date = new Date(milliseconds);
+    
+    // Define options for date formatting
+    const options = {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    };
+    
+    // Format the date using the options
+    const formattedDate = date.toLocaleString('en-US', options);
+    console.log('formatted date: ',formattedDate)
+    // Custom formatting to match the desired output
+    // Split the formatted date into date and time parts
+    const [datePart, timePart, clock] = formattedDate.split(', ');
+  
+    // Reformat time to uppercase 'AM'/'PM'
+    console.log('time part:',timePart);
+    const timeParts = timePart.split(' ');
+    const timeFormatted = `${timeParts[0]} , ${clock} `;
+
+    return `${datePart} ${timeFormatted}`;
+  }
+
   const formatTimeDifference = (startTimestamp, endTimestamp) => {
     const startTime = timestampToMilliseconds(startTimestamp);
     const endTime = timestampToMilliseconds(endTimestamp);
@@ -87,7 +120,7 @@ function TripDetails() {
       </div>
 
       <div className="tripDetailsCard">
-          
+          <div className="date">{formatTimestamp(trip.startingTime.seconds ,trip.startingTime.nanoseconds)}</div>
           {/* <div className="tripDetailsContent"> */}
             <div className="item-icon">{<MyLocationIcon />} <span> {trip.startingAddress}</span></div>      
           {/* </div> */}
@@ -96,12 +129,12 @@ function TripDetails() {
             <div className="item-icon">{<PlaceIcon/>} <span>  {trip.endingAddress}</span></div>   
           {/* </div> */}
         <div className="tripDetailsDistanceTime">
-        <div className="tripDistance">
-          Distance: {trip.distance.toFixed(2)} km
-        </div>
-        <div className="tripTime">
-          Time Taken: {formatTimeDifference(trip.startingTime, trip.endingTime)}
-        </div>
+          <div className="tripDistance">
+            Distance: {trip.distance.toFixed(2)} km
+          </div>
+          <div className="tripTime">
+            Time Taken: {formatTimeDifference(trip.startingTime, trip.endingTime)}
+          </div>
         </div>
       </div>
     

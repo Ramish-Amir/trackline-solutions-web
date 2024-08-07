@@ -15,9 +15,10 @@ import "./dashboard.css";
 import Page from "../../layouts/Page/Page";
 import TripsChart from "../../components/TripsChart/TripsChart";
 import RecentTrip from "../../components/RecentTrip/RecentTrip";
-import {getAllTrips} from "../../api/trips";
+import {getAllTrips,getTripsDifference} from "../../api/trips";
 import {getAllVehicles} from "../../api/vehicle";
 import {getAllUsers} from "../../api/users"
+
 import { setLogLevel } from "firebase/app";
 
 
@@ -29,6 +30,8 @@ const [totalVehicles,setTotalVehicles]=useState(0);
 const [totalUsers,setTotalUsers]=useState(0);
 const [totalDistance,setTotalDistance]=useState(0);
 const [users,setUser]=useState(null);
+const [lastMonthTrips,setLastMonthTrips]=useState(0);
+ 
 
 useEffect(() => 
    {
@@ -42,11 +45,14 @@ const fetchDetails= async ()=>
          setLoading(true);
          const trips = await getAllTrips();
          const vehicles = await getAllVehicles();
+         console.log("all vehicles: ",vehicles);
          const users=await getAllUsers();
+         console.log("all users: ",vehicles);
          setTotalTrips(trips.length);
          setTotalVehicles(vehicles.length);
          setTotalUsers(users.length);
          setUser(users);
+         setLastMonthTrips(getTripsDifference(trips));
          let totalDistance=0;
          for(const trip of trips)
            {
@@ -67,7 +73,8 @@ const fetchDetails= async ()=>
   console.log("number of trips ",totalTrips);
   console.log("number of Vehicles",totalVehicles);
   console.log("number of Users ",totalUsers);
-  
+  console.log("Last trip count increase",lastMonthTrips)
+ 
   const [tripsAnimation] = useSpring(() => ({
     number: totalTrips,
     from: { number: 0 },
@@ -103,15 +110,12 @@ const fetchDetails= async ()=>
             </h1>
             <div className="headerActions"></div>
           </div>
-          {/* <h1 className="page-title">
-            Welcome to your <i>Track</i>board!
-          </h1> */}
           <Row>
             {[
               {
                   title: "Total trips",       
                   value: tripsAnimation.number,
-                  change: "+278 in last month",
+                  change: lastMonthTrips+" from last month",
                   icon: "Trips",
                   color: "primary",
                   animation: tripsAnimation,
