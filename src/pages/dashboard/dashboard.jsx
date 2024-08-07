@@ -1,5 +1,5 @@
 import React from "react";
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -15,81 +15,82 @@ import "./dashboard.css";
 import Page from "../../layouts/Page/Page";
 import TripsChart from "../../components/TripsChart/TripsChart";
 import RecentTrip from "../../components/RecentTrip/RecentTrip";
-import {getAllTrips, getTripsCount} from "../../api/trips";
-import {getAllVehicles, getVehiclesCount} from "../../api/vehicle";
-import {getAllUsers, getUsersCount} from "../../api/users"
+import { getAllTrips, getTripsCount } from "../../api/trips";
+import { getAllVehicles, getVehiclesCount } from "../../api/vehicle";
+import { getAllUsers, getUsersCount } from "../../api/users";
 import { setLogLevel } from "firebase/app";
-
 
 const Dashboard = () => {
   // Define animations for each card
-const [totalTrips,setTotalTrips]=useState(0);
-const [loading,setLoading]=useState(true);
-const [totalVehicles,setTotalVehicles]=useState(0);
-const [totalUsers,setTotalUsers]=useState(0);
-const [totalDistance,setTotalDistance]=useState(0);
-const [users,setUser]=useState(null);
+  const [totalTrips, setTotalTrips] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [totalVehicles, setTotalVehicles] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalDistance, setTotalDistance] = useState(0);
+  const [users, setUser] = useState(null);
 
-useEffect(() => 
-   {
+  useEffect(() => {
     fetchDetails();
-   }, []);
+  }, []);
 
-const fetchDetails= async ()=>
-  {
-      try
-       {
-        setLoading(true);
-        const trips = await getTripsCount();
-        const vehicles = await getVehiclesCount();
-        const users = await getUsersCount();
-        setTotalTrips(trips);
-        setTotalVehicles(vehicles);
-        setTotalUsers(users);
-        setUser(users);
-        const tripDocs = await getAllTrips();
-        let totalDistance = 0;
-         for(const trip of tripDocs)
-           {
-             totalDistance+=trip.distance
-           }
-         setTotalDistance(totalDistance);  
-       }
-      catch(error)
-       {
-         console.log(error);
-       } 
-      finally
-       {
-         setLoading(false);
-       }
+  const fetchDetails = async () => {
+    try {
+      setLoading(true);
+      const trips = await getTripsCount();
+      const vehicles = await getVehiclesCount();
+      const users = await getUsersCount();
+      setTotalTrips(trips);
+      setTotalVehicles(vehicles);
+      setTotalUsers(users);
+      setUser(users);
+      const tripDocs = await getAllTrips();
+      let totalDistance = 0;
+      for (const trip of tripDocs) {
+        totalDistance += trip.distance;
+      }
+      setTotalDistance(Math.ceil(totalDistance));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  };  
-  
-  const [tripsAnimation] = useSpring(() => ({
-    number: totalTrips,
-    from: { number: 0 },
-    config: { duration: 2000 },
-  }),[totalTrips]);
+  const [tripsAnimation] = useSpring(
+    () => ({
+      number: totalTrips,
+      from: { number: 0 },
+      config: { duration: 2000 },
+    }),
+    [totalTrips]
+  );
 
-  const [vehicleAnimation] = useSpring(() => ({
-    number: totalVehicles,
-    from: { number: 0 },
-    config: { duration: 2000 },
-  }),[totalVehicles]);
+  const [vehicleAnimation] = useSpring(
+    () => ({
+      number: totalVehicles,
+      from: { number: 0 },
+      config: { duration: 2000 },
+    }),
+    [totalVehicles]
+  );
 
-  const [usersAnimation] = useSpring(() => ({
-    number: totalUsers,
-    from: { number: 0 },
-    config: { duration: 2000 },
-  }),[totalUsers]);
+  const [usersAnimation] = useSpring(
+    () => ({
+      number: totalUsers,
+      from: { number: 0 },
+      config: { duration: 2000 },
+    }),
+    [totalUsers]
+  );
 
-  const [milesAnimation] = useSpring(() => ({
-    number: totalDistance,
-    from: { number: 0 },
-    config: { duration: 2000 },
-  }),[totalDistance]);
-
+  const [milesAnimation] = useSpring(
+    () => ({
+      number: totalDistance,
+      from: { number: 0 },
+      config: { duration: 2000 },
+    }),
+    [totalDistance]
+  );
 
   return (
     <Page>
@@ -107,20 +108,19 @@ const fetchDetails= async ()=>
           <Row>
             {[
               {
-                  title: "Total trips",       
-                  value: tripsAnimation.number,
-                  change: "+278 in last month",
-                  icon: "Trips",
-                  color: "primary",
-                  animation: tripsAnimation,
-                  format: (n) =>
-                    `${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
-                 
+                title: "Total trips",
+                value: tripsAnimation.number,
+                change: `+${totalTrips} this month`,
+                icon: "Trips",
+                color: "primary",
+                animation: tripsAnimation,
+                format: (n) =>
+                  `${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
               },
               {
                 title: "Total Vehicle",
                 value: vehicleAnimation.number,
-                change: "+3 in last month",
+                change: `+${totalVehicles} this month`,
                 icon: "Vehicles",
                 color: "success",
                 animation: vehicleAnimation,
@@ -130,7 +130,7 @@ const fetchDetails= async ()=>
               {
                 title: "Users",
                 value: usersAnimation.number,
-                change: "+2 in last month",
+                change: `+${totalUsers} this month`,
                 icon: "Users",
                 color: "warning",
                 animation: usersAnimation,
@@ -139,7 +139,7 @@ const fetchDetails= async ()=>
               {
                 title: "Total miles",
                 value: milesAnimation.number,
-                change: "+2500 in last month",
+                change: `+${totalDistance} this year`,
                 icon: "Distance",
                 color: "danger",
                 animation: milesAnimation,
