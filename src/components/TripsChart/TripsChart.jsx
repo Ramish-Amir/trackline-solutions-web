@@ -14,7 +14,6 @@ import { tripsChartData } from "../../api/trips";
 
 function TripsChart() {
   const [data, setData] = useState([
-    { name: "Aug", Trips: 0 },
     { name: "Sep", Trips: 0 },
     { name: "Oct", Trips: 0 },
     { name: "Nov", Trips: 0 },
@@ -26,6 +25,7 @@ function TripsChart() {
     { name: "May", Trips: 0 },
     { name: "Jun", Trips: 0 },
     { name: "Jul", Trips: 0 },
+    { name: "Aug", Trips: 0 },
   ]);
 
   useEffect(() => {

@@ -9,7 +9,6 @@ import { DB_COLLECTIONS } from "./auth";
 import { db } from "../firebase"; // Assuming db is exported from firebase.js or similar
 
 const MONTHS = [
-  "Aug",
   "Sep",
   "Oct",
   "Nov",
@@ -21,6 +20,7 @@ const MONTHS = [
   "May",
   "Jun",
   "Jul",
+  "Aug",
 ];
 
 export const getAllTrips = async () => {
